@@ -46,13 +46,13 @@ function HeaderMainAdmin() {
                                 </div>
                             </li>
                             <hr/>
-                            <li className="nav-item">
-                                <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/loan"><i
-                                        className="fa-solid fa-piggy-bank"></i> Manage Loans</Link>
-                                </div>
-                            </li>
-                            <hr/>
+                            {/*<li className="nav-item">*/}
+                            {/*    <div data-bs-dismiss={"offcanvas"}>*/}
+                            {/*        <Link className={`nav-link ${styles.links}`} to="/admin/main/loan"><i*/}
+                            {/*            className="fa-solid fa-piggy-bank"></i> Manage Loans</Link>*/}
+                            {/*    </div>*/}
+                            {/*</li>*/}
+                            {/*<hr/>*/}
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
                                     <Link className={`nav-link ${styles.links}`} to="/admin/main/account_requests"><i
@@ -77,14 +77,14 @@ function HeaderMainAdmin() {
                                 </div>
                             </li>
                             <hr/>
-                            <li className="nav-link">
-                                <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to={"/admin/main/delete_account"}><i
-                                        className="fa-solid fa-trash"></i> Account
-                                        Deletion Requests
-                                    </Link>
-                                </div>
-                            </li>
+                            {/*<li className="nav-link">*/}
+                            {/*    <div data-bs-dismiss={"offcanvas"}>*/}
+                            {/*        <Link className={`nav-link ${styles.links}`} to={"/admin/main/delete_account"}><i*/}
+                            {/*            className="fa-solid fa-trash"></i> Account*/}
+                            {/*            Deletion Requests*/}
+                            {/*        </Link>*/}
+                            {/*    </div>*/}
+                            {/*</li>*/}
                         </ul>
                     </div>
                 </div>

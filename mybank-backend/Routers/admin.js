@@ -45,7 +45,30 @@ router.post("/getForms", async function (req, res) {
     if (isAdmin) {
         const users = await accountOpenRequests.find({});
         return res.send({body: users});
-    }else {
+    } else {
+        return res.send(false);
+    }
+});
+
+router.post("/getQueries", async function (req, res) {
+    const adminToken = req.body.adminToken;
+    const isAdmin = await verifyToken(adminToken);
+    if (isAdmin) {
+        const queries = await queriesCollection.find({status: "Pending"});
+        return res.send({body: queries});
+    } else {
+        return res.send(false);
+    }
+});
+
+router.post("/resolveQuery", async function (req, res) {
+    const adminToken = req.body.adminToken;
+    const queryId = req.body.queryId;
+    const isAdmin = await verifyToken(adminToken);
+    if (isAdmin) {
+        await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
+        return res.send(true);
+    } else {
         return res.send(false);
     }
 });
