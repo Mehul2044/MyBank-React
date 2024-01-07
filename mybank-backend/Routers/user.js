@@ -149,7 +149,7 @@ router.post("/submitQuery", async function (req, res) {
         const message = req.body.message;
         const accountNumber = await getAccountNumber(userToken);
         let user = await accountCollection.findOne({_id: accountNumber});
-        await queriesCollection.create({
+        const response = await queriesCollection.create({
             name: user.firstName + " " + user.lastName,
             phone: Number(user.phone),
             acc_no: accountNumber,
@@ -157,9 +157,29 @@ router.post("/submitQuery", async function (req, res) {
             message: message,
             status: "Pending"
         });
-        return res.send(true);
+        return res.send(response._id);
     } catch (error) {
         return res.send(false);
+    }
+});
+
+router.post("/getQueryStatus", async function (req, res) {
+    try {
+        const userToken = req.body.userToken;
+        const queryId = req.body.queryId;
+        const accountNumber = await getAccountNumber(userToken);
+        if (accountNumber) {
+            const query = await queriesCollection.findOne({_id: queryId});
+            if (query) {
+                return res.send({body: `Your query status is: ${query.status}`});
+            } else {
+                return res.send({body: "No query found!"});
+            }
+        } else {
+            return res.send({body:"You are not logged in!"});
+        }
+    } catch (error) {
+
     }
 });
 

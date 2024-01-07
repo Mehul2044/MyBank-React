@@ -13,6 +13,19 @@ function ContactUs() {
 
     const [title, setTitle] = useState("");
     const [message, setMessage] = useState("");
+    const [queryId, setQueryId] = useState("");
+
+    const searchQueryHandler = async (event) => {
+        event.preventDefault();
+        const requestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({userToken: userToken, queryId: queryId}),
+        };
+        const response = await (await fetch(`${backendUrl}/user/getQueryStatus`, requestOptions)).json();
+        alert(response.body);
+        setQueryId("");
+    }
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -23,7 +36,11 @@ function ContactUs() {
             body: JSON.stringify({userToken: userToken, title: title, message: message}),
         };
         const response = await (await fetch(`${backendUrl}/user/submitQuery`, requestOptions)).json();
-        alert(response ? "Query Submitted" : "Some Error Occurred!");
+        if (response) {
+            alert(`Query Submitted. Your query ID is: ${response}`);
+        } else {
+            alert("Some Error Occurred!");
+        }
         setTitle("");
         setMessage("");
         setIsLoading(false);
@@ -62,7 +79,7 @@ function ContactUs() {
             <p id="phone_num">+91 - 7654334567</p>
         </div>}
 
-        {isLogin && <div className={styles.contactLeft}>
+        {isLogin && <div className={styles.contactForm}>
             <h2 style={{textAlign: "center", color: "#6c2424"}}>CONTACT US</h2>
             <form onSubmit={submitHandler}>
                 <label className={styles.labelBox}>Query Title</label>
@@ -73,6 +90,13 @@ function ContactUs() {
                           className={styles.boxText} required={true} value={message}
                           onChange={event => setMessage(event.target.value)}></textarea>
                 <button type="submit" className={styles.sendButton}>Send</button>
+            </form>
+            <form onSubmit={searchQueryHandler}>
+                <label className={"form-label"} style={{marginTop: "2rem"}}>Track your Query</label><br/>
+                <input type={"text"} required={true} placeholder={"Enter your query ID"} className={"form-control"}
+                       style={{width: "20%", marginBottom: "1rem", display: "inline"}} value={queryId}
+                       onChange={event => setQueryId(event.target.value)}/>
+                <button type={"submit"} className={`btn btn-info ${styles.searchButton}`}>Search</button>
             </form>
         </div>}
 

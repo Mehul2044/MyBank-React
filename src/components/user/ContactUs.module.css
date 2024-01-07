@@ -44,11 +44,10 @@
     background-color: brown;
     color: whitesmoke;
     transition: 0.3s ease-in-out;
-
 }
 
-.contactLeft {
-    padding: 7% 9%;
+.contactForm {
+    padding: 4% 9% 1%;
     text-align: left;
 }
 
@@ -96,4 +95,9 @@
     display: block;
     color: #6c2424;
     font-weight: bold;
+}
+
+.searchButton {
+    display: inline;
+    margin-left: 1rem;
 }
