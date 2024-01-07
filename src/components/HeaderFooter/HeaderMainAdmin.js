@@ -63,9 +63,8 @@ function HeaderMainAdmin() {
                             <hr/>
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/transactions"><i
-                                        className="fa-solid fa-list"></i> View
-                                        Transactions</Link>
+                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/customers"><i
+                                        className="fa-solid fa-list"></i> View Customers</Link>
                                 </div>
                             </li>
                             <hr/>
