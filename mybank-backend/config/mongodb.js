@@ -139,6 +139,10 @@ const AccountOpenRequests = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phone: {
+      type: Number,
+      required: true
+    },
     formPath: {
         type: String,
         required: true

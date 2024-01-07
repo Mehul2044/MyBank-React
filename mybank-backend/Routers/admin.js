@@ -39,4 +39,15 @@ router.post("/getCustomers", async function (req, res) {
     }
 });
 
+router.post("/getForms", async function (req, res) {
+    const adminToken = req.body.adminToken;
+    const isAdmin = await verifyToken(adminToken);
+    if (isAdmin) {
+        const users = await accountOpenRequests.find({});
+        return res.send({body: users});
+    }else {
+        return res.send(false);
+    }
+});
+
 module.exports = router;
