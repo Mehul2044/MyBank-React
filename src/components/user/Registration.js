@@ -9,7 +9,7 @@ import app from "../../config/firebase_config";
 
 function Registration() {
     const [firstName, setFirstName] = useState("");
-    const [lastName, setlastName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
@@ -60,6 +60,11 @@ function Registration() {
             return;
         }
         alert(`Request submitted successfully!\nUse ${response} tracking id to track your request.`);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhoneNumber("");
+        setSelectedFile(null);
         setIsLoading(false);
     }
 
@@ -72,7 +77,7 @@ function Registration() {
             <label className={styles.labels} htmlFor="lastName">Last Name:</label>
             <input className={styles.inputs} type="text" id="lastName" name="lastName" required value={lastName}
                    pattern="^[A-Za-z]{2,}$" title="Please enter at least 2 alphabetic characters for the last name"
-                   onChange={event => setlastName(event.target.value)}
+                   onChange={event => setLastName(event.target.value)}
                    placeholder="Last Name"/>
             <label className={styles.labels} htmlFor="eMail">Email:</label>
             <input className={styles.inputs} type="email" id="eMail" name="eMail" required value={email}
