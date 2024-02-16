@@ -67,8 +67,8 @@ function HeaderMainUser() {
                      aria-labelledby="offcanvasNavbarLabel">
                     <div className="offcanvas-header">
                         <h5 className={`offcanvas-title`} id="offcanvasNavbarLabel">
-                            <Link className={styles.offTitle}
-                                  to="/main/view_profile">Welcome {name.toLocaleUpperCase()}!</Link>
+                            <div data-bs-dismiss={"offcanvas"}><Link className={styles.offTitle}
+                                     to="/main/user-profile">Welcome {name.toLocaleUpperCase()}!</Link></div>
                         </h5>
                         <button type="button" className="btn-close" data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
