@@ -61,12 +61,25 @@ router.post("/getQueries", async function (req, res) {
     }
 });
 
+router.post("/sendMessage", async function (req, res) {
+   const adminToken = req.body.adminToken;
+   const queryId = req.body.queryId;
+   const response = req.body.response;
+   const isAdmin = await verifyToken(adminToken);
+   if (isAdmin) {
+       await queriesCollection.updateOne({_id: queryId}, {$set: {response: response}});
+       return res.send(true);
+   } else {
+       return res.send(false);
+   }
+});
+
 router.post("/resolveQuery", async function (req, res) {
     const adminToken = req.body.adminToken;
     const queryId = req.body.queryId;
     const isAdmin = await verifyToken(adminToken);
     if (isAdmin) {
-        await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
+        await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved", response: "Resolved"}});
         return res.send(true);
     } else {
         return res.send(false);

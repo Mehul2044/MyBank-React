@@ -11,6 +11,8 @@ function Queries() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [list, setList] = useState([]);
+    const [selectedQueryId, setSelectedQueryId] = useState("");
+    const [message, setMessage] = useState("");
 
     const fetchData = async () => {
         const requestOptions = {
@@ -48,6 +50,18 @@ function Queries() {
         resolveQuery().then(() => fetchData());
     }
 
+    const responseHandler = (event) => {
+        event.preventDefault();
+        const requestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({adminToken: adminToken, queryId: selectedQueryId, response: message}),
+        };
+        fetch(`${backendUrl}/admin/sendMessage`, requestOptions).then(() => null);
+        setSelectedQueryId("");
+        setMessage("");
+    }
+
     if (isLoading) {
         return <>
             <SpaceDiv height={25}/>
@@ -65,7 +79,8 @@ function Queries() {
                 <th scope={"col"}>Phone</th>
                 <th scope={"col"}>Title of the Query</th>
                 <th scope={"col"}>Query</th>
-                <th>-----------</th>
+                <th>-----</th>
+                <th>-----</th>
             </tr>
             </thead>
             <tbody>
@@ -77,13 +92,34 @@ function Queries() {
                     <td>{item.title}</td>
                     <td>{item.message}</td>
                     <td>
-                        <button className={"btn btn-success"} onClick={() => buttonHandler(item._id)}>Mark as Resolved
+                        <button className={"btn btn-outline-success"} onClick={() => buttonHandler(item._id)}>Mark as
+                            Resolved
+                        </button>
+                    </td>
+                    <td>
+                        <button className={"btn btn-warning"} data-bs-toggle={"modal"}
+                                onClick={() => setSelectedQueryId(item._id)}
+                                data-bs-target={"#responseModal"}>Send a Message
                         </button>
                     </td>
                 </tr>
             ))}
             </tbody>
         </table>
+        <div className={"modal fade"} id={"responseModal"} tabIndex={-1} aria-hidden={true}>
+            <div className={"modal-dialog"}>
+                <div className={"modal-content"}>
+                    <div className={"modal-body"}>
+                        <form onSubmit={responseHandler}>
+                            <input type={"text"} placeholder={"Enter the Query Response"} className={"form-control"}
+                                   required={true} value={message} onChange={event => setMessage(event.target.value)}/>
+                            <input type={"submit"} value={"Send"} className={"btn btn-primary"}
+                                   data-bs-toggle={message.length === 0 ? "" : "modal"}/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </>;
 }
 

@@ -155,10 +155,12 @@ router.post("/submitQuery", async function (req, res) {
             acc_no: accountNumber,
             title: title,
             message: message,
-            status: "Pending"
+            status: "Pending",
+            response: "Pending"
         });
         return res.send(response._id);
     } catch (error) {
+        console.log(error);
         return res.send(false);
     }
 });
@@ -171,12 +173,12 @@ router.post("/getQueryStatus", async function (req, res) {
         if (accountNumber) {
             const query = await queriesCollection.findOne({_id: queryId});
             if (query) {
-                return res.send({body: `Your query status is: ${query.status}`});
+                return res.send({body: `Your query status is: ${query.status}. Additional message from the staff: ${query.response}`});
             } else {
                 return res.send({body: "No query found!"});
             }
         } else {
-            return res.send({body:"You are not logged in!"});
+            return res.send({body: "You are not logged in!"});
         }
     } catch (error) {
 
