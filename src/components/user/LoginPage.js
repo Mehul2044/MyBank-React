@@ -21,8 +21,13 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [enteredOtp, setEnteredOtp] = useState("");
 
+    const [staffId, setStaffId] = useState("");
+    const [staffPassword, setStaffPassword] = useState("");
+
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    const [isStaffLogin, setIsStaffLogin] = useState(false);
 
     useEffect(() => {
         const auth = getAuth(app);
@@ -86,6 +91,27 @@ function LoginPage() {
         }
     }
 
+    const staffLoginHandler = (event) => {
+        event.preventDefault();
+        setIsLoading(true);
+        dispatch(authActions.loginStaff({staffId: "sample1"}));
+        setIsLoading(false);
+        navigator("/staff", {replace: true});
+    }
+
+    const staffLoginForm = <form className={styles.mainForm} onSubmit={staffLoginHandler}>
+        <label htmlFor={"userID"}>User ID:</label>
+        <input type={"text"} name={"userID"} required={true} placeholder={"User ID"} value={staffId}
+               onChange={event => setStaffId(event.target.value)}/>
+        <label htmlFor={"password"}>Password:</label>
+        <input type={"password"} required={true} placeholder={"Password"} name={"password"} value={staffPassword}
+               onChange={event => setStaffPassword(event.target.value)}/>
+        {isLoading ? <LoadingSpinner/> : <input type={"submit"} className={styles.submitButton}/>}
+        <button className={"btn btn-outline-info"} type={"button"} onClick={() => setIsStaffLogin(false)}>Customer?
+            Login Here!
+        </button>
+    </form>;
+
     const formContent = isSuccess ?
         <>
             <form className={styles.mainForm} onSubmit={otpHandler}>
@@ -106,11 +132,14 @@ function LoginPage() {
                 <input type={"password"} name={"password"} required={true} placeholder={"Password"} value={password}
                        onChange={event => setPassword(event.target.value)}/>
                 {isLoading ? <LoadingSpinner/> : <input type={"submit"} className={styles.submitButton}/>}
+                <button className={"btn btn-outline-info"} type={"button"} onClick={() => setIsStaffLogin(true)}>Bank
+                    Staff? Login Here!
+                </button>
             </form>
         </>
 
     return <div className={`${styles.mainDiv} flex-fill`}>
-        {formContent}
+        {isStaffLogin ? staffLoginForm : formContent}
     </div>
 }
 

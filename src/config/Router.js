@@ -19,6 +19,8 @@ import Loan from "../components/user/Loan";
 import AccountOpening from "../components/admin/AccountOpening";
 import Customers from "../components/admin/Customers";
 import Queries from "../components/admin/Queries";
+import StaffMain from "../components/staff/StaffMain";
+import StaffDashboard from "../components/staff/StaffDashboard";
 
 function Router() {
     const isUserLogin = useSelector(state => state.authentication.isUserLogin);
@@ -54,6 +56,9 @@ function Router() {
             <Route path={"account_requests"} element={<AccountOpening/>}/>
             <Route path={"customers"} element={<Customers/>}/>
             <Route path={"view_queries"} element={<Queries/>}/>
+        </Route>
+        <Route path={"/staff"} element={<StaffMain/>}>
+            <Route path={"dashboard"} element={<StaffDashboard/>}/>
         </Route>
         <Route path={"*"} element={<PageNotFound/>}/>
     </Routes>;

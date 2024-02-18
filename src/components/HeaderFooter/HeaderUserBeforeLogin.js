@@ -18,7 +18,7 @@ function HeaderUserBeforeLogin() {
                         <li className="nav-item">
                             <Link to={"/login"}
                                   className={`nav-link text-decoration-none ${styles.navigationLink}`}
-                                  aria-current="page">User Login</Link>
+                                  aria-current="page">Login</Link>
                         </li>
                         <li className="nav-item">
                             <Link className={`nav-link text-decoration-none ${styles.navigationLink}`}
