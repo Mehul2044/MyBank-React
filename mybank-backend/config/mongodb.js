@@ -163,7 +163,7 @@ const AccountOpenRequests = new mongoose.Schema({
     }
 });
 
-const AdminLogins = new mongoose.Schema({
+const StaffLogins = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -186,7 +186,7 @@ module.exports = {
     transactionCollection: mongoose.model("Transactions", Transactions),
     loanRequestCollection: mongoose.model("Loan Requests", LoanRequest),
     accountOpenRequests: mongoose.model("Account Open Requests", AccountOpenRequests),
-    adminLoginCollection: mongoose.model("Admin Login", AdminLogins)
+    staffLoginCollection: mongoose.model("Staff Login", StaffLogins)
 };
 
 module.exports.connect = function () {

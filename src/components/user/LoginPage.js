@@ -91,12 +91,22 @@ function LoginPage() {
         }
     }
 
-    const staffLoginHandler = (event) => {
+    const staffLoginHandler = async (event) => {
         event.preventDefault();
         setIsLoading(true);
-        dispatch(authActions.loginStaff({staffId: "sample1"}));
+        const requestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({id: staffId, password: staffPassword}),
+        };
+        const id = await (await fetch(`${backendUrl}/staff/login`, requestOptions)).json();
         setIsLoading(false);
-        navigator("/staff", {replace: true});
+        if (id) {
+            dispatch(authActions.loginStaff({staffId: id}));
+            navigator("/staff", {replace: true});
+        }else {
+            alert("Incorrect Details!");
+        }
     }
 
     const staffLoginForm = <form className={styles.mainForm} onSubmit={staffLoginHandler}>
