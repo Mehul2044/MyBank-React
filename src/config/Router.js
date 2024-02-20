@@ -16,11 +16,14 @@ import Registration from "../components/user/Registration";
 import UserProfile from "../components/user/UserProfile";
 import Transfer from "../components/user/Transfer";
 import Loan from "../components/user/Loan";
-import AccountOpening from "../components/admin/AccountOpening";
-import Customers from "../components/admin/Customers";
-import Queries from "../components/admin/Queries";
 import StaffMain from "../components/staff/StaffMain";
 import StaffDashboard from "../components/staff/StaffDashboard";
+import ViewTransactions from "../components/admin/ViewTransactions";
+import DeletedAccounts from "../components/admin/DeletedAccounts";
+import ApplicationForm from "../components/admin/ApplicationForm";
+import CashDeposit from "../components/staff/CashDeposit";
+import AccountOpeningForms from "../components/staff/AccountOpeningForms";
+import ViewQueries from "../components/staff/ViewQueries";
 
 function Router() {
     const isUserLogin = useSelector(state => state.authentication.isUserLogin);
@@ -53,15 +56,15 @@ function Router() {
         <Route path={"/admin"} element={<BeforeLoginAdmin/>}/>
         <Route path={"/admin/main"} element={<AfterLoginAdmin/>}>
             <Route path={"dashboard"} element={<DashboardAdmin/>}/>
-            <Route path={"account_requests"} element={<AccountOpening/>}/>
-            <Route path={"customers"} element={<Customers/>}/>
-            <Route path={"view_queries"} element={<Queries/>}/>
+            <Route path={"view_transactions"} element={<ViewTransactions/>}/>
+            <Route path={"deleted_accounts"} element={<DeletedAccounts/>}/>
+            <Route path={"application_forms"} element={<ApplicationForm/>}/>
         </Route>
         <Route path={"/staff"} element={<StaffMain/>}>
             <Route path={"dashboard"} element={<StaffDashboard/>}/>
-            <Route path={"cash-deposit"}/>
-            <Route path={"account-opening"}/>
-            <Route path={"queries"}/>
+            <Route path={"cash-deposit"} element={<CashDeposit/>}/>
+            <Route path={"account-opening"} element={<AccountOpeningForms/>}/>
+            <Route path={"queries"} element={<ViewQueries/>}/>
         </Route>
         <Route path={"*"} element={<PageNotFound/>}/>
     </Routes>;

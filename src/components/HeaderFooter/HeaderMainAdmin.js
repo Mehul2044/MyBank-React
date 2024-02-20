@@ -22,7 +22,7 @@ function HeaderMainAdmin() {
                         aria-controls="offcanvasNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <Link className="navbar-brand" to="/main/dashboard"><img src={logo} style={{width: "10rem"}}
+                <Link className="navbar-brand" to="/admin/main/dashboard"><img src={logo} style={{width: "10rem"}}
                                                                          alt={"logo"}/></Link>
                 <span className="me-2"><button className={`btn btn-danger ${styles.logoutButton}`}
                                                data-bs-target="#logoutModal"
@@ -46,45 +46,27 @@ function HeaderMainAdmin() {
                                 </div>
                             </li>
                             <hr/>
-                            {/*<li className="nav-item">*/}
-                            {/*    <div data-bs-dismiss={"offcanvas"}>*/}
-                            {/*        <Link className={`nav-link ${styles.links}`} to="/admin/main/loan"><i*/}
-                            {/*            className="fa-solid fa-piggy-bank"></i> Manage Loans</Link>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<hr/>*/}
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/account_requests"><i
-                                        className="fa-regular fa-file"></i> Account
-                                        Opening Forms</Link>
+                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/view_transactions"><i
+                                        className="fa-solid fa-money-bill"></i> Transactions</Link>
                                 </div>
                             </li>
                             <hr/>
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/customers"><i
-                                        className="fa-solid fa-list"></i> View Customers</Link>
+                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/deleted_accounts"><i
+                                        className="fa-solid fa-trash"></i> Deleted Accounts</Link>
                                 </div>
                             </li>
                             <hr/>
-                            <li className="nav-item">
+                            <li className="nav-link">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to={"/admin/main/view_queries"}><i
-                                        className="fa-solid fa-question"></i> Manage
-                                        Customer Queries
+                                    <Link className={`nav-link ${styles.links}`} to={"/admin/main/application_forms"}><i
+                                        className="fa-solid fa-align-center"></i> User Application Forms
                                     </Link>
                                 </div>
                             </li>
-                            <hr/>
-                            {/*<li className="nav-link">*/}
-                            {/*    <div data-bs-dismiss={"offcanvas"}>*/}
-                            {/*        <Link className={`nav-link ${styles.links}`} to={"/admin/main/delete_account"}><i*/}
-                            {/*            className="fa-solid fa-trash"></i> Account*/}
-                            {/*            Deletion Requests*/}
-                            {/*        </Link>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
                         </ul>
                     </div>
                 </div>
