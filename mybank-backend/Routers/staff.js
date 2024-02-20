@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const router = Router();
 
-const {staffLoginCollection} = require("../config/mongodb");
+const {staffLoginCollection, queriesCollection} = require("../config/mongodb");
 
 const getStaff = async (userId) => {
     const staff = await staffLoginCollection.findOne({UID: userId});
@@ -30,6 +30,22 @@ router.post("/getName", async function (req, res) {
         return res.send(false);
     } else {
         return res.send({name: name});
+    }
+});
+
+router.post("/getNumberQueries", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        try {
+            const count = await queriesCollection.countDocuments({status: "Pending"});
+            return res.send({count: count});
+        } catch (error) {
+            console.error('Error counting documents:', error);
+            return res.status(500).send({error: 'Internal Server Error'});
+        }
     }
 });
 
