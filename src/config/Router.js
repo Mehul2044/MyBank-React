@@ -59,6 +59,9 @@ function Router() {
         </Route>
         <Route path={"/staff"} element={<StaffMain/>}>
             <Route path={"dashboard"} element={<StaffDashboard/>}/>
+            <Route path={"cash-deposit"}/>
+            <Route path={"account-opening"}/>
+            <Route path={"queries"}/>
         </Route>
         <Route path={"*"} element={<PageNotFound/>}/>
     </Routes>;
