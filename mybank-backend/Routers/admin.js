@@ -37,18 +37,7 @@ router.post("/getTransactions", async function (req, res) {
     }
 });
 
-router.post("/getCustomers", async function (req, res) {
-    const adminToken = req.body.adminToken;
-    const isAdmin = await verifyToken(adminToken);
-    if (isAdmin) {
-        const users = await accountCollection.find({});
-        return res.send({body: users});
-    } else {
-        return res.send(false);
-    }
-});
-
-router.post("/getForms", async function (req, res) {
+router.post("/getCustomerList", async function (req, res) {
     const adminToken = req.body.adminToken;
     const isAdmin = await verifyToken(adminToken);
     if (isAdmin) {
@@ -65,6 +54,11 @@ router.post("/getForms", async function (req, res) {
     } else {
         return res.send(false);
     }
+});
+
+router.post("/getLog", async function (req, res) {
+    const adminToken = req.body.adminToken;
+    const isAdmin = await verifyToken(adminToken);
 });
 
 module.exports = router;

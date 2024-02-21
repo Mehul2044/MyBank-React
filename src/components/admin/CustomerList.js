@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {backendUrl} from "../../config/constants";
 import SpaceDiv from "../UI/SpaceDiv";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import styles from "./ApplicationForm.module.css";
+import styles from "./CustomerList.module.css";
 
 function CustomerList() {
     const adminToken = useSelector(state => state.authentication.adminToken);
@@ -22,7 +22,7 @@ function CustomerList() {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({adminToken: adminToken}),
             };
-            const response = await (await fetch(`${backendUrl}/admin/getForms`, requestOptions)).json();
+            const response = await (await fetch(`${backendUrl}/admin/getCustomerList`, requestOptions)).json();
             setUsers(response.body);
             setShowUsers(response.body);
         }
