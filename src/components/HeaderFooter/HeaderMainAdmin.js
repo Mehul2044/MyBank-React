@@ -53,17 +53,10 @@ function HeaderMainAdmin() {
                                 </div>
                             </li>
                             <hr/>
-                            <li className="nav-item">
-                                <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/active_accounts"><i
-                                        className="fa-solid fa-piggy-bank"></i> Active Accounts</Link>
-                                </div>
-                            </li>
-                            <hr/>
                             <li className="nav-link">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to={"/admin/main/application_forms"}><i
-                                        className="fa-solid fa-align-center"></i> User Application Forms
+                                    <Link className={`nav-link ${styles.links}`} to={"/admin/main/customer_list"}><i
+                                        className="fa-solid fa-align-center"></i> Customer Lists
                                     </Link>
                                 </div>
                             </li>

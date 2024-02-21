@@ -1,0 +1,19 @@
+.mainHeading {
+    margin-left: 5rem;
+    margin-top: 7rem;
+}
+
+.tableStyle {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mainHeading {
+    margin-left: 5rem;
+}
+
+.searchButton {
+    display: inline;
+    margin-left: 1rem;
+}
