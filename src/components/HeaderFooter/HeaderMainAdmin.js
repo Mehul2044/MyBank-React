@@ -67,6 +67,7 @@ function HeaderMainAdmin() {
                                     </Link>
                                 </div>
                             </li>
+                            <hr/>
                         </ul>
                     </div>
                 </div>

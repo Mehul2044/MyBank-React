@@ -46,7 +46,7 @@ function ViewTransactions() {
                 <th scope={"col"}>Receiver A/C</th>
                 <th scope={"col"}>Amount</th>
                 <th scope={"col"}>Date(dd/mm/yyyy)</th>
-                <th scope={"col"}>Time(24-hour)</th>
+                <th scope={"col"}>Time(12-hour)</th>
             </tr>
             </thead>
             <tbody className={"table-group-divider"}>
@@ -63,7 +63,6 @@ function ViewTransactions() {
             </tbody>
         </table>
     </>;
-
 }
 
 export default ViewTransactions;

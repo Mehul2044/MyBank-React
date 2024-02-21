@@ -31,7 +31,7 @@ router.post("/trackLogin", async function(req, res) {
    await activityTrackCollection.create({
        accountNumber: req.body.accountNumber,
        date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-       time: new Date().toLocaleString().slice(11, 19).replace('T', ' ')
+       time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
    });
    return res.send(true);
 });
@@ -253,7 +253,7 @@ router.post("/transfer", async function (req, res) {
                 amount: amount,
                 recipient: accountNumber,
                 date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-                time: new Date().toLocaleString().slice(11, 19).replace('T', ' ')
+                time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
             });
         }
         return res.send({message: "Transaction Complete"});

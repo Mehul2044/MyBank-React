@@ -119,11 +119,7 @@ router.post("/formReject", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        await accountOpenRequests.updateOne(
-            {_id: req.body.formId},
-            {$set: {status: "Rejected"}},
-            {new: true}
-        );
+        await accountOpenRequests.deleteOne({_id: req.body.formId});
         return res.send(true);
     }
 });
@@ -146,7 +142,7 @@ router.post("/sendMessage", async function (req, res) {
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
-    }else {
+    } else {
         await queriesCollection.updateOne({_id: queryId}, {$set: {response: response}});
         return res.send(true);
     }
@@ -158,7 +154,7 @@ router.post("/resolveQuery", async function (req, res) {
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
-    }else {
+    } else {
         await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
         return res.send(true);
     }

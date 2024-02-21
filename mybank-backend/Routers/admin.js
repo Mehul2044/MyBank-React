@@ -12,7 +12,7 @@ const {
     deleteAccountCollection,
     queriesCollection,
     loanRequestCollection,
-    accountOpenRequests
+    accountOpenRequests, activityTrackCollection
 } = require("../config/mongodb");
 
 
@@ -56,9 +56,15 @@ router.post("/getCustomerList", async function (req, res) {
     }
 });
 
-router.post("/getLog", async function (req, res) {
+router.post("/getLogs", async function (req, res) {
     const adminToken = req.body.adminToken;
     const isAdmin = await verifyToken(adminToken);
+    if (isAdmin) {
+        const records = await activityTrackCollection.find({});
+        return res.send({body: records});
+    } else {
+        return res.send(false);
+    }
 });
 
 module.exports = router;

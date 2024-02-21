@@ -135,7 +135,7 @@ function Dashboard() {
                         <th scope="col">Amount (INR)</th>
                         <th scope="col">Amount Received To/From</th>
                         <th scope="col">Date (dd/mm/yyyy)</th>
-                        <th scope="col">Time (24-hour)</th>
+                        <th scope="col">Time (12-hour)</th>
                     </tr>
                     </thead>
                     <tbody>
