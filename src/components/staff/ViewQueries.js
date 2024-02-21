@@ -70,7 +70,7 @@ function ViewQueries() {
     }
 
     return <>
-        <SpaceDiv height={6}/>
+        <SpaceDiv height={2}/>
         <h1 className={styles.mainHeading}>Customer Queries...</h1>
         <table className={`table table-striped table-hover ${styles.tableStyle}`}>
             <thead>
