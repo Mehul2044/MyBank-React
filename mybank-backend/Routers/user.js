@@ -305,18 +305,4 @@ router.post("/applyLoan", async function (req, res) {
     }
 });
 
-router.post("/deleteAccount", async function (req, res) {
-    try {
-        let userToken = req.body.userToken;
-        const reason = req.body.reason;
-        const accountNumber = await getAccountNumber(userToken);
-        await deleteAccountCollection.create({
-            accountNumber: accountNumber, reason: reason
-        });
-        return res.send({message: "Delete Request Submitted!"});
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 module.exports = router;

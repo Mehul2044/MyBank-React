@@ -12,22 +12,6 @@ function HeaderMainUser() {
 
     const userToken = useSelector(state => state.authentication.userToken);
 
-    const [reason, setReason] = useState("");
-
-    const deletionFormHandler = async () => {
-        if (reason.length <= 0) {
-            alert("No Reason specified! Request would not be sent.");
-            return;
-        }
-        const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken, reason: reason}),
-        };
-        const response = await (await fetch(`${backendUrl}/user/deleteAccount`, requestOptions)).json();
-        alert(response.message);
-    }
-
     const [name, setName] = useState("");
 
     useEffect(() => {
@@ -105,14 +89,6 @@ function HeaderMainUser() {
                                 </div>
                             </li>
                             <hr/>
-                            <li className="nav-item">
-                                <div data-bs-dismiss={"offcanvas"}>
-                                    <button className={`nav-link ${styles.links}`} data-bs-target="#accountDeleteModal"
-                                            data-bs-toggle="modal"><i className="fa-solid fa-trash"></i> Delete
-                                        account Request
-                                    </button>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -133,33 +109,6 @@ function HeaderMainUser() {
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
                         <button className="btn btn-danger" data-bs-target="#logoutModal" data-bs-toggle="modal"
                                 style={{color: "white", textDecoration: "none"}} onClick={logoutHandler}>Log Out
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div className="modal fade" id="accountDeleteModal" tabIndex="-1" aria-labelledby="accountDeleteModalLabel"
-             aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">Account Deletion Request</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <form>
-                            <label htmlFor={"reason"} className={"form-label"}>Reason:</label>
-                            <input type={"text"} className={"form-control"} required={true} placeholder={"Reason"}
-                                   value={reason} onChange={event => setReason(event.target.value)}/>
-                        </form>
-                        Are you sure you want to send request for deletion fo request?<br/><br/>
-                        **You will be asked to confirm once more from our bank administrators.
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button className="btn btn-danger" data-bs-target="#accountDeleteModal" data-bs-toggle="modal"
-                                type={"submit"}
-                                style={{color: "white", textDecoration: "none"}} onClick={deletionFormHandler}>Yes
                         </button>
                     </div>
                 </div>
