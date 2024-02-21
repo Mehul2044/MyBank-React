@@ -5,7 +5,7 @@ const {
     staffLoginCollection,
     queriesCollection,
     balanceCollection,
-    transactionCollection
+    transactionCollection, accountOpenRequests, accountCollection
 } = require("../config/mongodb");
 
 const getStaff = async (userId) => {
@@ -73,6 +73,58 @@ router.post("/depositMoney", async function (req, res) {
             time: new Date().toLocaleString().slice(11, 19).replace('T', ' '),
         });
         return res.send({message: "Transaction Complete"});
+    }
+});
+
+router.post("/getForms", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        const users = await accountOpenRequests.find({status: "Pending"});
+        return res.send({body: users});
+    }
+});
+
+router.post("/formAccept", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        const form = await accountOpenRequests.findOneAndUpdate(
+            {_id: req.body.formId},
+            {$set: {status: "Accepted"}},
+            {new: true}
+        );
+        const user = await accountCollection.create({
+            eMail: form.email,
+            firstName: form.first_name,
+            lastName: form.last_name,
+            password: "NewAccount@123",
+            phone: form.phone,
+        });
+        await balanceCollection.create({
+            accountNumber: user._id,
+            balance: 0
+        });
+        return res.send(true);
+    }
+});
+
+router.post("/formReject", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        const form = await accountOpenRequests.findOneAndUpdate(
+            {_id: req.body.formId},
+            {$set: {status: "Rejected"}},
+            {new: true}
+        );
+        return res.send(true);
     }
 });
 
