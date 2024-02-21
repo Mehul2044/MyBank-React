@@ -1,4 +1,4 @@
-import styles from "./AccountOpening.module.css";
+import styles from "../staff/AccountOpening.module.css";
 import {useEffect, useState} from "react";
 import SpaceDiv from "../UI/SpaceDiv";
 import LoadingSpinner from "../UI/LoadingSpinner";

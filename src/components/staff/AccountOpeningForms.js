@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {backendUrl} from "../../config/constants";
 import SpaceDiv from "../UI/SpaceDiv";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import styles from "../admin/AccountOpening.module.css";
+import styles from "./AccountOpening.module.css";
 
 function AccountOpeningForms() {
     const staffId = useSelector(state => state.authentication.staffId);

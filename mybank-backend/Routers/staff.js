@@ -119,11 +119,47 @@ router.post("/formReject", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        const form = await accountOpenRequests.findOneAndUpdate(
+        await accountOpenRequests.updateOne(
             {_id: req.body.formId},
             {$set: {status: "Rejected"}},
             {new: true}
         );
+        return res.send(true);
+    }
+});
+
+router.post("/getQueries", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        const queries = await queriesCollection.find({status: "Pending"});
+        return res.send({body: queries});
+    }
+});
+
+router.post("/sendMessage", async function (req, res) {
+    const staffId = req.body.id;
+    const queryId = req.body.queryId;
+    const response = req.body.response;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    }else {
+        await queriesCollection.updateOne({_id: queryId}, {$set: {response: response}});
+        return res.send(true);
+    }
+});
+
+router.post("/resolveQuery", async function (req, res) {
+    const staffId = req.body.id;
+    const queryId = req.body.queryId;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    }else {
+        await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
         return res.send(true);
     }
 });

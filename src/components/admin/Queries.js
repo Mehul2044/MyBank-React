@@ -1,4 +1,4 @@
-import styles from "./Queries.module.css";
+import styles from "../staff/Queries.module.css";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import SpaceDiv from "../UI/SpaceDiv";
