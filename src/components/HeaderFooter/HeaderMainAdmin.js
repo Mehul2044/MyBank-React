@@ -23,7 +23,7 @@ function HeaderMainAdmin() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <Link className="navbar-brand" to="/admin/main/dashboard"><img src={logo} style={{width: "10rem"}}
-                                                                         alt={"logo"}/></Link>
+                                                                               alt={"logo"}/></Link>
                 <span className="me-2"><button className={`btn btn-danger ${styles.logoutButton}`}
                                                data-bs-target="#logoutModal"
                                                data-bs-toggle="modal">Log Out</button></span>
@@ -55,8 +55,8 @@ function HeaderMainAdmin() {
                             <hr/>
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
-                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/deleted_accounts"><i
-                                        className="fa-solid fa-trash"></i> Deleted Accounts</Link>
+                                    <Link className={`nav-link ${styles.links}`} to="/admin/main/active_accounts"><i
+                                        className="fa-solid fa-piggy-bank"></i> Active Accounts</Link>
                                 </div>
                             </li>
                             <hr/>

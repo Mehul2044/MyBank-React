@@ -19,11 +19,11 @@ import Loan from "../components/user/Loan";
 import StaffMain from "../components/staff/StaffMain";
 import StaffDashboard from "../components/staff/StaffDashboard";
 import ViewTransactions from "../components/admin/ViewTransactions";
-import DeletedAccounts from "../components/admin/DeletedAccounts";
 import ApplicationForm from "../components/admin/ApplicationForm";
 import CashDeposit from "../components/staff/CashDeposit";
 import AccountOpeningForms from "../components/staff/AccountOpeningForms";
 import ViewQueries from "../components/staff/ViewQueries";
+import Customers from "../components/admin/Customers";
 
 function Router() {
     const isUserLogin = useSelector(state => state.authentication.isUserLogin);
@@ -57,7 +57,7 @@ function Router() {
         <Route path={"/admin/main"} element={<AfterLoginAdmin/>}>
             <Route path={"dashboard"} element={<DashboardAdmin/>}/>
             <Route path={"view_transactions"} element={<ViewTransactions/>}/>
-            <Route path={"deleted_accounts"} element={<DeletedAccounts/>}/>
+            <Route path={"active_accounts"} element={<Customers/>}/>
             <Route path={"application_forms"} element={<ApplicationForm/>}/>
         </Route>
         <Route path={"/staff"} element={<StaffMain/>}>

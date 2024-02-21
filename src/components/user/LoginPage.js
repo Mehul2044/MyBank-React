@@ -84,6 +84,12 @@ function LoginPage() {
             const userToken = await user.getIdToken();
             setIsLoading(false);
             dispatch(authActions.loginUser({userToken: userToken}));
+            const requestOptions = {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({accountNumber: accountNumber}),
+            };
+            await fetch(`${backendUrl}/user/trackLogin`, requestOptions);
             navigator("/main", {replace: true});
         } catch (error) {
             alert("OTP is incorrect. Try again!");
@@ -146,7 +152,7 @@ function LoginPage() {
                     Staff? Login Here!
                 </button>
             </form>
-        </>
+        </>;
 
     return <div className={`${styles.mainDiv} flex-fill`}>
         {isStaffLogin ? staffLoginForm : formContent}

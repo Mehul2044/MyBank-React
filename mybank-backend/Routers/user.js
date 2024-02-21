@@ -4,7 +4,7 @@ const {
     accountOpenRequests,
     balanceCollection,
     transactionCollection,
-    loanRequestCollection, deleteAccountCollection, queriesCollection
+    loanRequestCollection, deleteAccountCollection, queriesCollection, activityTrackCollection
 } = require("../config/mongodb");
 const router = Router();
 const {admin} = require("../config/firebase-admin-config");
@@ -26,6 +26,15 @@ async function getAccountNumber(userToken) {
         return false;
     }
 }
+
+router.post("/trackLogin", async function(req, res) {
+   await activityTrackCollection.create({
+       accountNumber: req.body.accountNumber,
+       date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
+       time: new Date().toLocaleString().slice(11, 19).replace('T', ' ')
+   });
+   return res.send(true);
+});
 
 router.post("/getName", async function (req, res) {
     try {

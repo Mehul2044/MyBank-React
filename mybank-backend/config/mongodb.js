@@ -145,8 +145,8 @@ const AccountOpenRequests = new mongoose.Schema({
         required: true,
     },
     phone: {
-      type: Number,
-      required: true
+        type: Number,
+        required: true
     },
     formPath: {
         type: String,
@@ -178,6 +178,21 @@ const StaffLogins = new mongoose.Schema({
     }
 });
 
+const ActivityTrack = new mongoose.Schema({
+    accountNumber: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: String,
+        required: true,
+    },
+    time: {
+        type: String,
+        required: true,
+    }
+});
+
 module.exports = {
     accountCollection: mongoose.model("Account", Account),
     deleteAccountCollection: mongoose.model("Account Deletion", DeleteAccount),
@@ -186,7 +201,8 @@ module.exports = {
     transactionCollection: mongoose.model("Transactions", Transactions),
     loanRequestCollection: mongoose.model("Loan Requests", LoanRequest),
     accountOpenRequests: mongoose.model("Account Open Requests", AccountOpenRequests),
-    staffLoginCollection: mongoose.model("Staff Login", StaffLogins)
+    staffLoginCollection: mongoose.model("Staff Login", StaffLogins),
+    activityTrackCollection: mongoose.model("Activity Track", ActivityTrack)
 };
 
 module.exports.connect = function () {
