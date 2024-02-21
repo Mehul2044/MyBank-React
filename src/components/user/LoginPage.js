@@ -104,7 +104,7 @@ function LoginPage() {
         if (id) {
             dispatch(authActions.loginStaff({staffId: id}));
             navigator("/staff", {replace: true});
-        }else {
+        } else {
             alert("Incorrect Details!");
         }
     }

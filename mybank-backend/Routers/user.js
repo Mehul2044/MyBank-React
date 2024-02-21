@@ -115,7 +115,11 @@ router.post("/accountInfo", async function (req, res) {
         let date = [];
         let time = [];
         for (let i = 0; i < transactions_length; i++) {
-            if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
+            if (accountNumber.toString() === transactions[i].sender_acc_no.toString() && accountNumber.toString() === transactions[i].recipient){
+                amount.push("+" + transactions[i].amount.toString());
+                to_from.push("Self Credit");
+            }
+            else if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
                 amount.push("-" + transactions[i].amount.toString());
                 to_from.push(transactions[i].recipient.toString());
             } else if (accountNumber.toString() === transactions[i].recipient) {

@@ -1,7 +1,12 @@
 const {Router} = require("express");
 const router = Router();
 
-const {staffLoginCollection, queriesCollection} = require("../config/mongodb");
+const {
+    staffLoginCollection,
+    queriesCollection,
+    balanceCollection,
+    transactionCollection
+} = require("../config/mongodb");
 
 const getStaff = async (userId) => {
     const staff = await staffLoginCollection.findOne({UID: userId});
@@ -46,6 +51,28 @@ router.post("/getNumberQueries", async function (req, res) {
             console.error('Error counting documents:', error);
             return res.status(500).send({error: 'Internal Server Error'});
         }
+    }
+});
+
+router.post("/depositMoney", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send({message: "Error Occurred"});
+    } else {
+        const accountNumber = req.body.accountNumber;
+        const amount = req.body.amount;
+        // const method = req.body.method;
+        // const comment = req.body.comment;
+        await balanceCollection.updateOne({accountNumber: accountNumber}, {$inc: {balance: amount}});
+        await transactionCollection.create({
+            sender_acc_no: accountNumber,
+            amount: amount,
+            recipient: accountNumber,
+            date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
+            time: new Date().toLocaleString().slice(11, 19).replace('T', ' '),
+        });
+        return res.send({message: "Transaction Complete"});
     }
 });
 

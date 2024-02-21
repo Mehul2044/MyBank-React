@@ -70,7 +70,7 @@ function HeaderMainStaff() {
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
                                     <Link className={`nav-link ${styles.links}`} to="/staff/cash-deposit"><i
-                                        className="fa-solid fa-money-bill"></i> Cash Deposit</Link>
+                                        className="fa-solid fa-money-bill"></i> Fund Deposit</Link>
                                 </div>
                             </li>
                             <hr/>
