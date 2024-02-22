@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
+const morgan = require("morgan");
 
 const userRoutes = require("./Routers/user");
 const adminRoutes = require("./Routers/admin");
@@ -9,6 +12,14 @@ const staffRoutes = require("./Routers/staff");
 const mongooseModule = require("./config/mongodb");
 
 const PORT = 3001;
+
+const logDirectory = path.join(__dirname, "log");
+if (!fs.existsSync(logDirectory)) {
+    fs.mkdirSync(logDirectory);
+}
+
+const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), { flags: "a" });
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(cors());
 app.use(express.json());

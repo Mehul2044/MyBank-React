@@ -4,7 +4,7 @@ const {
     accountOpenRequests,
     balanceCollection,
     transactionCollection,
-    loanRequestCollection, deleteAccountCollection, queriesCollection, activityTrackCollection
+    loanRequestCollection, queriesCollection, activityTrackCollection
 } = require("../config/mongodb");
 const router = Router();
 const {admin} = require("../config/firebase-admin-config");

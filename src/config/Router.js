@@ -25,6 +25,7 @@ import AccountOpeningForms from "../components/staff/AccountOpeningForms";
 import ViewQueries from "../components/staff/ViewQueries";
 import LogList from "../components/admin/LogList";
 import ViewLoan from "../components/staff/ViewLoan";
+import ActiveLoans from "../components/admin/ActiveLoans";
 
 function Router() {
     const isUserLogin = useSelector(state => state.authentication.isUserLogin);
@@ -58,6 +59,7 @@ function Router() {
         <Route path={"/admin/main"} element={<AfterLoginAdmin/>}>
             <Route path={"dashboard"} element={<DashboardAdmin/>}/>
             <Route path={"view_transactions"} element={<ViewTransactions/>}/>
+            <Route path={"active_loans"} element={<ActiveLoans/>}/>
             <Route path={"customer_list"} element={<CustomerList/>}/>
             <Route path={"view_log"} element={<LogList/>}/>
         </Route>

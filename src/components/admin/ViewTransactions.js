@@ -4,6 +4,7 @@ import {backendUrl} from "../../config/constants";
 import SpaceDiv from "../UI/SpaceDiv";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import styles from "./Transactions.module.css";
+import {CSVLink} from "react-csv";
 
 function ViewTransactions() {
     const adminToken = useSelector(state => state.authentication.adminToken);
@@ -34,6 +35,14 @@ function ViewTransactions() {
 
     const reversedList = [...list].reverse();
 
+    const csvData = reversedList.map(item => ({
+        "Sender A/C": item.sender_acc_no,
+        "Receiver A/C": item.recipient,
+        "Amount": item.amount,
+        "Date (dd/mm/yyyy)": item.date,
+        "Time (12-hour)": item.time
+    }));
+
     return <>
         <SpaceDiv height={7}/>
         <h1 className={styles.mainHeading}>Transactions Occurring in the Bank</h1>
@@ -62,6 +71,12 @@ function ViewTransactions() {
             ))}
             </tbody>
         </table>
+        <SpaceDiv height={2}/>
+        <div style={{marginLeft: "auto", marginRight: "auto"}}>
+            <CSVLink data={csvData} filename={"transaction_records.csv"}>
+                <span>Export to CSV Format</span>
+            </CSVLink>
+        </div>
     </>;
 }
 

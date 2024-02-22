@@ -6,11 +6,7 @@ const router = Router();
 
 const {
     accountCollection,
-    adminLoginCollection,
-    balanceCollection,
     transactionCollection,
-    deleteAccountCollection,
-    queriesCollection,
     loanRequestCollection,
     accountOpenRequests, activityTrackCollection
 } = require("../config/mongodb");
@@ -61,6 +57,17 @@ router.post("/getLogs", async function (req, res) {
     const isAdmin = await verifyToken(adminToken);
     if (isAdmin) {
         const records = await activityTrackCollection.find({});
+        return res.send({body: records});
+    } else {
+        return res.send(false);
+    }
+});
+
+router.post("/viewLoan", async function (req, res) {
+    const adminToken = req.body.adminToken;
+    const isAdmin = await verifyToken(adminToken);
+    if (isAdmin) {
+        const records = await loanRequestCollection.find({status: "Accepted"});
         return res.send({body: records});
     } else {
         return res.send(false);
