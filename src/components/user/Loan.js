@@ -109,7 +109,7 @@ function Loan() {
 
         <div className={`container ${styles.containerMiddle}`} id="one">
             <div>
-                <img src={loan2} width="45%" alt={"loan2"}/>
+                <img src={loan2} width="45%" alt={"loan2"} style={{borderRadius: "5%"}}/>
             </div>
             <div>
                 <h1>SECURED LOANS</h1>
@@ -163,7 +163,7 @@ function Loan() {
 
         <div className={`container ${styles.containerEnd}`} id="two">
             <div id>
-                <img src={loan3} width="50%" alt={"loan3"}/>
+                <img src={loan3} width="50%" alt={"loan3"} style={{borderRadius: "5%"}}/>
             </div>
             <div>
                 <h1>UNSECURED LOANS</h1>

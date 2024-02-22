@@ -80,6 +80,7 @@ function ContactUs() {
         </div>}
 
         {isLogin && <div className={styles.contactForm}>
+            <SpaceDiv height={3}/>
             <h2 style={{textAlign: "center", color: "#6c2424"}}>CONTACT US</h2>
             <form onSubmit={submitHandler}>
                 <label className={styles.labelBox}>Query Title</label>

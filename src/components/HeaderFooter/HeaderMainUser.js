@@ -85,7 +85,14 @@ function HeaderMainUser() {
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
                                     <Link className={`nav-link ${styles.links}`} to="/main/loan"><i
-                                        className="fa-solid fa-piggy-bank"></i> View Loans</Link>
+                                        className="fa-solid fa-piggy-bank"></i> Loans</Link>
+                                </div>
+                            </li>
+                            <hr/>
+                            <li className="nav-item">
+                                <div data-bs-dismiss={"offcanvas"}>
+                                    <Link className={`nav-link ${styles.links}`} to="/main/contact"><i
+                                        className="fa-solid fa-piggy-bank"></i> Submit a Query</Link>
                                 </div>
                             </li>
                             <hr/>

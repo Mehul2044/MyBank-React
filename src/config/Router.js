@@ -24,6 +24,7 @@ import CashDeposit from "../components/staff/CashDeposit";
 import AccountOpeningForms from "../components/staff/AccountOpeningForms";
 import ViewQueries from "../components/staff/ViewQueries";
 import LogList from "../components/admin/LogList";
+import ViewLoan from "../components/staff/ViewLoan";
 
 function Router() {
     const isUserLogin = useSelector(state => state.authentication.isUserLogin);
@@ -64,6 +65,7 @@ function Router() {
             <Route path={"dashboard"} element={<StaffDashboard/>}/>
             <Route path={"cash-deposit"} element={<CashDeposit/>}/>
             <Route path={"account-opening"} element={<AccountOpeningForms/>}/>
+            <Route path={"loan"} element={<ViewLoan/>}/>
             <Route path={"queries"} element={<ViewQueries/>}/>
         </Route>
         <Route path={"*"} element={<PageNotFound/>}/>

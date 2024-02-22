@@ -9,6 +9,7 @@
 
 .topImage {
     margin-bottom: 2rem;
+    border-radius: 10%;
 }
 
 .topContainer p {

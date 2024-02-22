@@ -20,8 +20,8 @@ function Footer() {
                             </li>
                             <li className="mx-4"><Link className={styles.footerLinks} to="terms-conditions">Terms &
                                 Conditions</Link></li>
-                            <li className="mx-4"><Link className={styles.footerLinks} to="contact">Contact Us</Link>
-                            </li>
+                            {/*<li className="mx-4"><Link className={styles.footerLinks} to="contact">Contact Us</Link>*/}
+                            {/*</li>*/}
                         </ul>
                     </div>
                     <div className="col-md-4" style={{textAlign: "center"}}>
