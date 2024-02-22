@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Project Setup Instructions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. **Ensure Node.js is installed**: Make sure Node.js is installed on your system.
 
-## Available Scripts
+2. **Install project dependencies**:
+   ```sh
+   npm install
+   ```
+    - This installs dependencies for the project in the root folder.
 
-In the project directory, you can run:
+3. **Navigate to the backend folder**:
+   ```sh
+   cd mybank-backend
+   ```
+    - Move to the backend folder.
 
-### `npm start`
+4. **Install backend dependencies**:
+   ```sh
+   npm install
+   ```
+    - This installs dependencies for the backend.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. **Set up environment variable**:
+    - Ensure that the **mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json** file is added as an environment variable named `GOOGLE_APPLICATION_CREDENTIALS`. For example, in Linux:
+      ```sh
+      export GOOGLE_APPLICATION_CREDENTIALS="/home/mehul/Desktop/Coding/Web development/Project/MyBank-React/mybank-backend/config/mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json"
+      ```
+      This sets the environment variable for the current session.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+6. **Start the backend server while still in the `mybank-backend` folder**:
+   ```sh
+   node app.js
+   ```
+    - This command starts the backend server.
 
-### `npm test`
+7. **Return to the project root folder**:
+   ```sh
+   cd ..
+   ```
+    - Go back to the root folder.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+8. **Start the frontend development server**:
+   ```sh
+   npm start
+   ```
+    - This command starts the frontend development server.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+9. **Access the web application**:
+    - Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the web application.

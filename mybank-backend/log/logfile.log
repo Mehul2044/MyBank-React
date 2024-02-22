@@ -229,3 +229,5 @@
 ::1 - - [22/Feb/2024:16:25:25 +0000] "POST /user/accountInfo HTTP/1.1" 200 696 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 ::1 - - [22/Feb/2024:16:33:48 +0000] "GET / HTTP/1.1" 200 32 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 ::1 - - [22/Feb/2024:16:33:48 +0000] "GET /favicon.ico HTTP/1.1" 304 - "http://localhost:3001/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+::1 - - [22/Feb/2024:16:34:05 +0000] "GET /sajdg HTTP/1.1" 200 37 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+::1 - - [22/Feb/2024:16:34:05 +0000] "GET /favicon.ico HTTP/1.1" 304 - "http://localhost:3001/sajdg" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
