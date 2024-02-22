@@ -24,6 +24,10 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use(cors());
 app.use(express.json());
 
+app.get("/", function (req, res) {
+    res.send({message: "Welcome to MyBank!"});
+});
+
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/staff", staffRoutes);
