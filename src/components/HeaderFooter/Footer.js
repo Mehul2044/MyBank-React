@@ -1,10 +1,12 @@
 import styles from "./Footer.module.css";
 import logo from "../../assets/logo.png";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function Footer() {
+    const isLogin = useSelector(state => state.authentication.isUserLogin);
+
     return <>
-        {/*<div className={"flex-fill"}></div>*/}
         <footer className={`py-2 px-4 ${styles.footerClass}`}>
             <div className={"container-fluid"}>
                 <div className={"row"}>
@@ -20,8 +22,9 @@ function Footer() {
                             </li>
                             <li className="mx-4"><Link className={styles.footerLinks} to="terms-conditions">Terms &
                                 Conditions</Link></li>
-                            {/*<li className="mx-4"><Link className={styles.footerLinks} to="contact">Contact Us</Link>*/}
-                            {/*</li>*/}
+                            {!isLogin &&
+                                <li className="mx-4"><Link className={styles.footerLinks} to="contact">Contact Us</Link>
+                                </li>}
                         </ul>
                     </div>
                     <div className="col-md-4" style={{textAlign: "center"}}>

@@ -12,66 +12,44 @@ const {
 } = require("../config/mongodb");
 
 
-async function verifyToken(adminToken) {
+async function verifyToken(req, res, next) {
     try {
         const auth = getAuth(admin);
-        await auth.verifyIdToken(adminToken);
-        return true;
+        await auth.verifyIdToken(req.body.adminToken);
+        next();
     } catch (error) {
-        return false;
+        return res.status(401).json({message: "Unauthorized"});
     }
 }
 
+router.use(verifyToken);
+
 router.post("/getTransactions", async function (req, res) {
-    const adminToken = req.body.adminToken;
-    const isAdmin = await verifyToken(adminToken);
-    if (isAdmin) {
-        const transactions = await transactionCollection.find({});
-        return res.send({body: transactions});
-    } else {
-        return res.send(false);
-    }
+    const transactions = await transactionCollection.find({});
+    return res.send({body: transactions});
 });
 
 router.post("/getCustomerList", async function (req, res) {
-    const adminToken = req.body.adminToken;
-    const isAdmin = await verifyToken(adminToken);
-    if (isAdmin) {
-        const users = await accountOpenRequests.find({status: "Accepted"});
-        for (let user of users) {
-            const account = await accountCollection.findOne({phone: user.phone});
-            if (account) {
-                const userObj = user.toObject();
-                userObj.accountId = account._id;
-                users[users.indexOf(user)] = userObj;
-            }
+    const users = await accountOpenRequests.find({status: "Accepted"});
+    for (let user of users) {
+        const account = await accountCollection.findOne({phone: user.phone});
+        if (account) {
+            const userObj = user.toObject();
+            userObj.accountId = account._id;
+            users[users.indexOf(user)] = userObj;
         }
-        return res.send({body: users});
-    } else {
-        return res.send(false);
     }
+    return res.send({body: users});
 });
 
 router.post("/getLogs", async function (req, res) {
-    const adminToken = req.body.adminToken;
-    const isAdmin = await verifyToken(adminToken);
-    if (isAdmin) {
-        const records = await activityTrackCollection.find({});
-        return res.send({body: records});
-    } else {
-        return res.send(false);
-    }
+    const records = await activityTrackCollection.find({});
+    return res.send({body: records});
 });
 
 router.post("/viewLoan", async function (req, res) {
-    const adminToken = req.body.adminToken;
-    const isAdmin = await verifyToken(adminToken);
-    if (isAdmin) {
-        const records = await loanRequestCollection.find({status: "Accepted"});
-        return res.send({body: records});
-    } else {
-        return res.send(false);
-    }
+    const records = await loanRequestCollection.find({status: "Accepted"});
+    return res.send({body: records});
 });
 
 module.exports = router;
