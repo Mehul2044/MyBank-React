@@ -5,7 +5,7 @@ const {
     staffLoginCollection,
     queriesCollection,
     balanceCollection,
-    transactionCollection, accountOpenRequests, accountCollection
+    transactionCollection, accountOpenRequests, accountCollection, loanRequestCollection
 } = require("../config/mongodb");
 
 const getStaff = async (userId) => {
@@ -156,6 +156,39 @@ router.post("/resolveQuery", async function (req, res) {
         return res.send(false);
     } else {
         await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
+        return res.send(true);
+    }
+});
+
+router.post("/viewLoan", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        const list = await loanRequestCollection.find({status: "Pending"});
+        return res.send({body: list});
+    }
+});
+
+router.post("/acceptLoan", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        await loanRequestCollection.updateOne({_id: req.body.loanId}, {$set: {status: "Accepted"}});
+        return res.send(true);
+    }
+});
+
+router.post("/rejectLoan", async function (req, res) {
+    const staffId = req.body.id;
+    const name = await getStaff(staffId);
+    if (!name) {
+        return res.send(false);
+    } else {
+        await loanRequestCollection.updateOne({_id: req.body.loanId}, {$set: {status: "Rejected"}});
         return res.send(true);
     }
 });

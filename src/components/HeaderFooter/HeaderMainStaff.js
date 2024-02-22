@@ -84,7 +84,7 @@ function HeaderMainStaff() {
                             <li className="nav-item">
                                 <div data-bs-dismiss={"offcanvas"}>
                                     <Link className={`nav-link ${styles.links}`} to="/staff/loan"><i
-                                        className="fa-solid fa-piggy-bank"></i> View Loans</Link>
+                                        className="fa-solid fa-piggy-bank"></i> View Pending Loans</Link>
                                 </div>
                             </li>
                             <hr/>
