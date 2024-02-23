@@ -18,10 +18,10 @@ if (!fs.existsSync(logDirectory)) {
     fs.mkdirSync(logDirectory);
 }
 
-const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), { flags: "a" });
-app.use(morgan("combined", { stream: accessLogStream }));
+const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
+app.use(morgan("combined", {stream: accessLogStream}));
 
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000'}));
 app.use(express.json());
 
 app.get("/", function (req, res) {
@@ -33,7 +33,12 @@ app.use("/admin", adminRoutes);
 app.use("/staff", staffRoutes);
 
 app.get("*", function (req, res) {
-   res.send({message: "No valid request point!"});
+    res.send({message: "No valid request point!"});
+});
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 app.listen(PORT, function () {

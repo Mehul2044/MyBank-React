@@ -1,4 +1,6 @@
 const {Router} = require("express");
+const multer = require("multer");
+const path = require("path");
 const {
     accountCollection,
     accountOpenRequests,
@@ -9,6 +11,18 @@ const {
 const router = Router();
 const {admin} = require("../config/firebase-admin-config");
 const {getAuth} = require("firebase-admin/auth");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, 'uploads')); // Define upload destination
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Define filename
+    }
+});
+
+// Initialize Multer upload
+const upload = multer({storage: storage});
 
 async function getAccountNumber(userToken) {
     try {
@@ -27,13 +41,13 @@ async function getAccountNumber(userToken) {
     }
 }
 
-router.post("/trackLogin", async function(req, res) {
-   await activityTrackCollection.create({
-       accountNumber: req.body.accountNumber,
-       date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-       time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
-   });
-   return res.send(true);
+router.post("/trackLogin", async function (req, res) {
+    await activityTrackCollection.create({
+        accountNumber: req.body.accountNumber,
+        date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
+        time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
+    });
+    return res.send(true);
 });
 
 router.post("/getName", async function (req, res) {
@@ -64,6 +78,19 @@ router.post("/login", async function (req, res) {
             return res.send(false);
         }
     }
+});
+
+router.post("/upload", upload.single('file'), async function (req, res) {
+    res.send({message: "File uploaded successfully"});
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const phoneNumber = req.body.phoneNumber;
+    const fileUrl = req.body.fileUrl;
+    let user = await accountCollection.findOne({
+        phone: phoneNumber
+    });
+    if (user) return res.send(false);
 });
 
 router.post("/register", async function (req, res) {
@@ -124,11 +151,10 @@ router.post("/accountInfo", async function (req, res) {
         let date = [];
         let time = [];
         for (let i = 0; i < transactions_length; i++) {
-            if (accountNumber.toString() === transactions[i].sender_acc_no.toString() && accountNumber.toString() === transactions[i].recipient){
+            if (accountNumber.toString() === transactions[i].sender_acc_no.toString() && accountNumber.toString() === transactions[i].recipient) {
                 amount.push("+" + transactions[i].amount.toString());
                 to_from.push("Self Credit");
-            }
-            else if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
+            } else if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
                 amount.push("-" + transactions[i].amount.toString());
                 to_from.push(transactions[i].recipient.toString());
             } else if (accountNumber.toString() === transactions[i].recipient) {
