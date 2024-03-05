@@ -1,8 +1,15 @@
+require("dotenv").config()
+const path = require('path');
+const fs = require("fs");
+
+const relativePath = 'config/mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json';
+const absolutePath = path.resolve(__dirname, relativePath);
+process.env.GOOGLE_APPLICATION_CREDENTIALS = absolutePath;
+
 const express = require("express");
 const app = express();
+
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
 const morgan = require("morgan");
 
 const userRoutes = require("./Routers/user");
@@ -34,11 +41,6 @@ app.use("/staff", staffRoutes);
 
 app.get("*", function (req, res) {
     res.send({message: "No valid request point!"});
-});
-
-app.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
 });
 
 app.listen(PORT, function () {
