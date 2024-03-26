@@ -2,4 +2,6 @@
 .idea
 /config/mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json
 
+/log
+
 .env
