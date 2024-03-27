@@ -2,7 +2,7 @@ require("dotenv").config()
 const path = require('path');
 const fs = require("fs");
 
-const relativePath = 'config/mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json';
+const relativePath = 'mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json';
 const absolutePath = path.resolve(__dirname, relativePath);
 process.env.GOOGLE_APPLICATION_CREDENTIALS = absolutePath;
 
@@ -18,7 +18,7 @@ const staffRoutes = require("./Routers/staff");
 
 const mongooseModule = require("./config/mongodb");
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const logDirectory = path.join(__dirname, "log");
 if (!fs.existsSync(logDirectory)) {
@@ -28,7 +28,7 @@ if (!fs.existsSync(logDirectory)) {
 const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
 app.use(morgan("combined", {stream: accessLogStream}));
 
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({}));
 app.use(express.json());
 
 app.get("/", function (req, res) {
