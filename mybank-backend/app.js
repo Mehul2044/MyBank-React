@@ -28,7 +28,7 @@ if (!fs.existsSync(logDirectory)) {
 const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
 app.use(morgan("combined", {stream: accessLogStream}));
 
-app.use(cors({}));
+app.use(cors({origin: ["http://localhost:3000", "https://mybank-backend.onrender.com"]}));
 app.use(express.json());
 
 app.get("/", function (req, res) {
@@ -45,5 +45,5 @@ app.get("*", function (req, res) {
 
 app.listen(PORT, function () {
     mongooseModule.connect();
-    console.log(`Server is running on port ${PORT}\nUse http://localhost:${PORT} to access the server.`);
+    console.log(`Server is running on port ${PORT}`);
 });
