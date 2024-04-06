@@ -65,24 +65,26 @@ function LogList() {
             <button className={`btn btn-warning ${styles.searchButton}`} type={"button"} onClick={resetHandler}>Reset
             </button>
         </form>
-        <table className={`table table-striped table-hover ${styles.tableStyle}`}>
-            <thead>
-            <tr className={"table-primary"}>
-                <th scope={"col"}>Account Number</th>
-                <th scope={"col"}>Date(dd/mm/yyyy)</th>
-                <th scope={"col"}>Time(12-hour)</th>
-            </tr>
-            </thead>
-            <tbody className={"table-group-divider"}>
-            {reversedList.map((item, index) => (
-                <tr key={index}>
-                    <td>{item.accountNumber}</td>
-                    <td>{item.date}</td>
-                    <td>{item.time}</td>
+        <div className={styles.mainTable}>
+            <table className={`table table-striped table-hover ${styles.tableStyle}`}>
+                <thead>
+                <tr className={"table-primary"}>
+                    <th scope={"col"}>Account Number</th>
+                    <th scope={"col"}>Date(dd/mm/yyyy)</th>
+                    <th scope={"col"}>Time(12-hour)</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody className={"table-group-divider"}>
+                {reversedList.map((item, index) => (
+                    <tr key={index}>
+                        <td>{item.accountNumber}</td>
+                        <td>{item.date}</td>
+                        <td>{item.time}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
         <SpaceDiv height={5}/>
         <div style={{marginLeft: "auto", marginRight: "auto"}}>
             <CSVLink data={csvData} filename={"login_records.csv"}>

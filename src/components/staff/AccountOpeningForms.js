@@ -59,36 +59,38 @@ function AccountOpeningForms() {
 
     return <>
         <h1 className={styles.mainHeading}>Pending Account Opening Forms...</h1>
-        <table className={`table table-striped table-hover ${styles.tableStyle}`}>
-            <thead>
-            <tr className={"table-primary"}>
-                <th scope={"col"}>Name</th>
-                <th scope={"col"}>Email</th>
-                <th scope={"col"}>Phone</th>
-                <th scope={"col"}>Account Opening Form</th>
-                <th scope={"col"}>-------</th>
-                <th scope={"col"}>-------</th>
-            </tr>
-            </thead>
-            <tbody>
-            {list.map((item, index) => (
-                <tr key={item._id}>
-                    <td><h6>{`${item.first_name} ${item.last_name}`}</h6></td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td><a target={"_blank"} href={item.formPath} rel="noreferrer">Link</a></td>
-                    <td>
-                        <button className={"btn btn-lg btn-success"} onClick={() => acceptHandler(item._id)}>Accept
-                        </button>
-                    </td>
-                    <td>
-                        <button className={"btn btn-lg btn-warning"} onClick={() => rejectHandler(item._id)}>Reject
-                        </button>
-                    </td>
+        <div className={styles.mainTable}>
+            <table className={`table table-striped table-hover ${styles.tableStyle}`}>
+                <thead>
+                <tr className={"table-primary"}>
+                    <th scope={"col"}>Name</th>
+                    <th scope={"col"}>Email</th>
+                    <th scope={"col"}>Phone</th>
+                    <th scope={"col"}>Account Opening Form</th>
+                    <th scope={"col"}>-------</th>
+                    <th scope={"col"}>-------</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {list.map((item, index) => (
+                    <tr key={item._id}>
+                        <td><h6>{`${item.first_name} ${item.last_name}`}</h6></td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td><a target={"_blank"} href={item.formPath} rel="noreferrer">Link</a></td>
+                        <td>
+                            <button className={"btn btn-lg btn-success"} onClick={() => acceptHandler(item._id)}>Accept
+                            </button>
+                        </td>
+                        <td>
+                            <button className={"btn btn-lg btn-warning"} onClick={() => rejectHandler(item._id)}>Reject
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
         <p style={{marginTop: "8rem"}}>**Note that Accept and Reject is final once it is submitted.</p>
     </>;
 }

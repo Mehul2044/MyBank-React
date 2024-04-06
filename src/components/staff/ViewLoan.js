@@ -79,35 +79,37 @@ function ViewLoan() {
             <option value={"Vehicle Loan"}>Vehicle Loan</option>
             <option value={"Mortgage Loan"}>Mortgage Loan</option>
         </select>
-        <table className={`table table-striped table-hover ${styles.tableStyle}`}>
-            <thead>
-            <tr className={"table-primary"}>
-                <th scope={"col"}>Account Number</th>
-                <th scope={"col"}>Loan Amount</th>
-                <th scope={"col"}>Loan Type</th>
-                <th scope={"col"}>Reason</th>
-                <th>-----</th>
-                <th>-----</th>
-            </tr>
-            </thead>
-            <tbody>
-            {filteredList.map((item, index) => (
-                <tr key={index}>
-                    <td>{item.acc_no}</td>
-                    <td>{item.loan_amount}</td>
-                    <td>{item.loan_type}</td>
-                    <td>{item.reason}</td>
-                    <td>
-                        <button className={"btn btn-outline-success"} onClick={() => approveLoan(item._id)}>Approve
-                        </button>
-                    </td>
-                    <td>
-                        <button className={"btn btn-danger"} onClick={() => rejectLoan(item._id)}>Reject</button>
-                    </td>
+        <div className={styles.loanTable}>
+            <table className={`table table-striped table-hover ${styles.tableStyle}`}>
+                <thead>
+                <tr className={"table-primary"}>
+                    <th scope={"col"}>Account Number</th>
+                    <th scope={"col"}>Loan Amount</th>
+                    <th scope={"col"}>Loan Type</th>
+                    <th scope={"col"}>Reason</th>
+                    <th>-----</th>
+                    <th>-----</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {filteredList.map((item, index) => (
+                    <tr key={index}>
+                        <td>{item.acc_no}</td>
+                        <td>{item.loan_amount}</td>
+                        <td>{item.loan_type}</td>
+                        <td>{item.reason}</td>
+                        <td>
+                            <button className={"btn btn-outline-success"} onClick={() => approveLoan(item._id)}>Approve
+                            </button>
+                        </td>
+                        <td>
+                            <button className={"btn btn-danger"} onClick={() => rejectLoan(item._id)}>Reject</button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
         <p style={{marginTop: "5rem", marginLeft: "1.5rem"}}>** Please note that Accept or Reject is final and cannot be
             reverted.</p>
     </>;

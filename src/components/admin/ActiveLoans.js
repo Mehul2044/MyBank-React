@@ -63,24 +63,26 @@ function ActiveLoans() {
             <button className={`btn btn-warning ${styles.searchButton}`} type={"button"} onClick={resetHandler}>Reset
             </button>
         </form>
-        <table className={`table table-striped table-hover ${styles.tableStyle}`}>
-            <thead>
-            <tr className={"table-primary"}>
-                <th scope={"col"}>Account Number</th>
-                <th scope={"col"}>Loan Amount</th>
-                <th scope={"col"}>Loan Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            {filteredList.map((item, index) => (
-                <tr key={index}>
-                    <td>{item.acc_no}</td>
-                    <td>{item.loan_amount}</td>
-                    <td>{item.loan_type}</td>
+        <div className={styles.mainTable}>
+            <table className={`table table-striped table-hover ${styles.tableStyle}`}>
+                <thead>
+                <tr className={"table-primary"}>
+                    <th scope={"col"}>Account Number</th>
+                    <th scope={"col"}>Loan Amount</th>
+                    <th scope={"col"}>Loan Type</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {filteredList.map((item, index) => (
+                    <tr key={index}>
+                        <td>{item.acc_no}</td>
+                        <td>{item.loan_amount}</td>
+                        <td>{item.loan_type}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
         <SpaceDiv height={5}/>
         <div style={{marginLeft: "auto", marginRight: "auto"}}>
             <CSVLink data={csvData} filename={"loan_records.csv"}>

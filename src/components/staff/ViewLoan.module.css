@@ -16,3 +16,8 @@
     margin-left: 3rem;
     border: 1px solid;
 }
+
+.loanTable {
+    overflow-y: auto;
+    height: 25rem;
+}

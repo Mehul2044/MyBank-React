@@ -61,28 +61,30 @@ function CustomerList() {
             <button className={`btn btn-warning ${styles.searchButton}`} type={"button"} onClick={resetHandler}>Reset
             </button>
         </form>
-        <table className={`table table-striped table-hover ${styles.tableStyle}`}>
-            <thead>
-            <tr className={"table-primary"}>
-                <th scope={"col"}>Account Number</th>
-                <th scope={"col"}>Name</th>
-                <th scope={"col"}>Email</th>
-                <th scope={"col"}>Phone</th>
-                <th scope={"col"}>User Application Form</th>
-            </tr>
-            </thead>
-            <tbody>
-            {showUsers.map((item, index) => (
-                <tr key={index}>
-                    <td>{`${item.accountId}`}</td>
-                    <td>{`${item.first_name} ${item.last_name}`}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td><a target={"_blank"} href={item.formPath} rel="noreferrer">Link</a></td>
+        <div className={styles.mainTable}>
+            <table className={`table table-striped table-hover ${styles.tableStyle}`}>
+                <thead>
+                <tr className={"table-primary"}>
+                    <th scope={"col"}>Account Number</th>
+                    <th scope={"col"}>Name</th>
+                    <th scope={"col"}>Email</th>
+                    <th scope={"col"}>Phone</th>
+                    <th scope={"col"}>User Application Form</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {showUsers.map((item, index) => (
+                    <tr key={index}>
+                        <td>{`${item.accountId}`}</td>
+                        <td>{`${item.first_name} ${item.last_name}`}</td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td><a target={"_blank"} href={item.formPath} rel="noreferrer">Link</a></td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
     </>;
 }
 

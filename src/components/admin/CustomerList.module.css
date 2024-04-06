@@ -17,3 +17,8 @@
     display: inline;
     margin-left: 1rem;
 }
+
+.mainTable {
+    overflow-y: auto;
+    height: 20rem;
+}
