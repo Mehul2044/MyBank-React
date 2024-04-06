@@ -27,9 +27,7 @@ function Dashboard() {
 
     useEffect(() => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken}),
+            headers: {"Content-Type": "application/json", "userToken": userToken},
         };
         const fetchData = async () => {
             setIsLoading(true);
@@ -53,9 +51,7 @@ function Dashboard() {
     const refreshTransactionHandler = async () => {
         setTransactionLoading(true);
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken}),
+            headers: {"Content-Type": "application/json", "userToken": userToken},
         };
         const fetchData = async () => {
             const response = await (await fetch(`${backendUrl}/user/accountInfo`, requestOptions)).json();

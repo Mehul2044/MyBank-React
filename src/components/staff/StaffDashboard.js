@@ -28,9 +28,7 @@ function StaffDashboard() {
 
     useEffect(() => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({id: staffId}),
+            headers: {"Content-Type": "application/json", "id": staffId},
         };
         setIsLoading(true);
         const fetchQueries = async () => {

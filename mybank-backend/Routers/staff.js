@@ -28,8 +28,8 @@ router.post("/login", async function (req, res) {
     }
 });
 
-router.post("/getName", async function (req, res) {
-    const staffId = req.body.id;
+router.get("/getName", async function (req, res) {
+    const staffId = req.header("id");
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
@@ -38,8 +38,8 @@ router.post("/getName", async function (req, res) {
     }
 });
 
-router.post("/getNumberQueries", async function (req, res) {
-    const staffId = req.body.id;
+router.get("/getNumberQueries", async function (req, res) {
+    const staffId = req.header("id");
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
@@ -69,15 +69,20 @@ router.post("/depositMoney", async function (req, res) {
             sender_acc_no: accountNumber,
             amount: amount,
             recipient: accountNumber,
-            date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-            time: new Date().toLocaleString().slice(11, 19).replace('T', ' '),
+            date: new Date().toLocaleDateString("en-GB"),
+            time: new Date().toLocaleTimeString("en-US", {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            }),
         });
         return res.send({message: "Transaction Complete"});
     }
 });
 
-router.post("/getForms", async function (req, res) {
-    const staffId = req.body.id;
+router.get("/getForms", async function (req, res) {
+    const staffId = req.header("id");
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
@@ -124,8 +129,8 @@ router.post("/formReject", async function (req, res) {
     }
 });
 
-router.post("/getQueries", async function (req, res) {
-    const staffId = req.body.id;
+router.get("/getQueries", async function (req, res) {
+    const staffId = req.header("id");
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);
@@ -160,8 +165,8 @@ router.post("/resolveQuery", async function (req, res) {
     }
 });
 
-router.post("/viewLoan", async function (req, res) {
-    const staffId = req.body.id;
+router.get("/viewLoan", async function (req, res) {
+    const staffId = req.header("id");
     const name = await getStaff(staffId);
     if (!name) {
         return res.send(false);

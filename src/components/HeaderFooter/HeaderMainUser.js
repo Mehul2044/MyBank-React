@@ -16,9 +16,8 @@ function HeaderMainUser() {
 
     useEffect(() => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken}),
+            method: "GET",
+            headers: {"Content-Type": "application/json", "userToken": userToken},
         };
         const getName = async () => {
             const response = await (await fetch(`${backendUrl}/user/getName`, requestOptions)).json();

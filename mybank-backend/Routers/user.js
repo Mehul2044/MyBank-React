@@ -32,15 +32,20 @@ async function getAccountNumber(userToken) {
 router.post("/trackLogin", async function (req, res) {
     await activityTrackCollection.create({
         accountNumber: req.body.accountNumber,
-        date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-        time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
+        date: new Date().toLocaleDateString('en-GB'),
+        time: new Date().toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true
+        }),
     });
     return res.send(true);
 });
 
-router.post("/getName", async function (req, res) {
+router.get("/getName", async function (req, res) {
     try {
-        const userToken = req.body.userToken;
+        const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
         const user = await accountCollection.findOne({
             _id: accountNumber
@@ -108,9 +113,9 @@ router.post("/trackRequest", async function (req, res) {
     }
 });
 
-router.post("/accountInfo", async function (req, res) {
+router.get("/accountInfo", async function (req, res) {
     try {
-        const userToken = req.body.userToken;
+        const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
         let user = await accountCollection.findOne({
             _id: accountNumber
@@ -199,9 +204,9 @@ router.post("/getQueryStatus", async function (req, res) {
     }
 });
 
-router.post("/profileDetails", async function (req, res) {
+router.get("/profileDetails", async function (req, res) {
     try {
-        const userToken = req.body.userToken;
+        const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
         let user = await accountCollection.findOne({
             _id: accountNumber
@@ -253,8 +258,13 @@ router.post("/transfer", async function (req, res) {
                 sender_acc_no: user._id,
                 amount: amount,
                 recipient: accountNumber,
-                date: new Date().toLocaleString().slice(0, 9).replace('T', ' '),
-                time: new Date().toLocaleString().slice(11, 22).replace('T', ' ')
+                date: new Date().toLocaleDateString('en-GB'),
+                time: new Date().toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true
+                }),
             });
         }
         return res.send({message: "Transaction Complete"});
@@ -263,9 +273,9 @@ router.post("/transfer", async function (req, res) {
     }
 });
 
-router.post("/getLoanDetails", async function (req, res) {
+router.get("/getLoanDetails", async function (req, res) {
     try {
-        const userToken = req.body.userToken;
+        const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
         const loans = await loanRequestCollection.find({
             acc_no: accountNumber

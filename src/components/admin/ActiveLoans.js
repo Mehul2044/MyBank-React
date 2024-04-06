@@ -20,9 +20,7 @@ function ActiveLoans() {
         setIsLoading(true);
         const fetchData = async () => {
             const requestOptions = {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({adminToken: adminToken}),
+                headers: {"Content-Type": "application/json", "adminToken": adminToken},
             };
             const response = await (await fetch(`${backendUrl}/admin/viewLoan`, requestOptions)).json();
             setList(response.body);

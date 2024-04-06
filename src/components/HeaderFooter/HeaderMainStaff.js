@@ -16,9 +16,7 @@ function HeaderMainStaff() {
 
     useEffect(() => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({id: userId}),
+            headers: {"Content-Type": "application/json", "id": userId},
         };
         const getName = async () => {
             const response = await (await fetch(`${backendUrl}/staff/getName`, requestOptions)).json();

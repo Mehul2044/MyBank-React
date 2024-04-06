@@ -14,9 +14,7 @@ function AccountOpeningForms() {
     useEffect(() => {
         const fetchData = async () => {
             const requestOptions = {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({id: staffId}),
+                headers: {"Content-Type": "application/json", "id": staffId},
             };
             const response = await (await fetch(`${backendUrl}/staff/getForms`, requestOptions)).json();
             setList(response.body);

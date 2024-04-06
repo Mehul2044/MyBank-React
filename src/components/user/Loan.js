@@ -44,9 +44,7 @@ function Loan() {
 
     const fetchLoans = async () => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken}),
+            headers: {"Content-Type": "application/json", "userToken": userToken},
         };
         setIsLoading(true);
         const response = await (await fetch(`${backendUrl}/user/getLoanDetails`, requestOptions)).json();

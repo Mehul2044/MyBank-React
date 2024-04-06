@@ -21,9 +21,7 @@ function UserProfile() {
 
     useEffect(() => {
         const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userToken: userToken}),
+            headers: {"Content-Type": "application/json", "userToken": userToken},
         };
         const fetchData = async () => {
             setIsLoading(true);
