@@ -84,7 +84,7 @@ function Dashboard() {
     return <>
         <SpaceDiv height={5}/>
 
-        <div id="info-container" className={animateInfo && styles.slideIn}
+        <div id="info-container" className={animateInfo ? styles.slideIn : ""}
              style={{opacity: animateInfo ? "1" : "0"}}>
             <img src={profileImage} width="160" height="200" alt={"profile"} className={styles.infoImage}/>
             <div className={styles.infoText}>
