@@ -71,10 +71,10 @@ function Transfer() {
                                                                                         onChange={event => setAccountNumber(event.target.value)}/>
                         </div>
                         <div className="col-12 p-0 px-4"><span
-                            className={`text-uppercase ${styles.textMuted}`}>Enter Password</span></div>
+                            className={`text-uppercase ${styles.textMuted}`}>Enter Profile Password</span></div>
                         <div className={`col-12 p-0 px-4 ${styles.formSpacing}`}>
                             <input type="password" name="passwd" id="passwd" aria-label=""
-                                   className="d-flex align-items-center my-2" placeholder="Password" required
+                                   className="d-flex align-items-center my-2" placeholder="Profile Password" required
                                    value={password} onChange={event => setPassword(event.target.value)}/>
                         </div>
                         <div className="col-12 p-0 px-4">

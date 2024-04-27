@@ -92,6 +92,7 @@ router.post("/register", async function (req, res) {
             formPath: fileUrl,
             status: "Pending",
             password: "NewAccount@123",
+            profilePassword: "ProfilePassword@123"
         });
         const savedRequest = await newRequest.save();
         res.send(savedRequest._id);
@@ -244,7 +245,7 @@ router.post("/transfer", async function (req, res) {
         let user = await accountCollection.findOne({
             _id: senderAccount
         });
-        if (user.password !== password) return res.send({message: "Password Incorrect!"});
+        if (user.profilePassword !== password) return res.send({message: "Password Incorrect!"});
         const sender_balance_doc = await balanceCollection.findOne({
             accountNumber: user._id
         });

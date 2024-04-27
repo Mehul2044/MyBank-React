@@ -108,6 +108,7 @@ router.post("/formAccept", async function (req, res) {
             firstName: form.first_name,
             lastName: form.last_name,
             password: "NewAccount@123",
+            profilePassword: "ProfilePassword@123",
             phone: form.phone,
         });
         await balanceCollection.create({

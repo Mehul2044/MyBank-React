@@ -17,6 +17,10 @@ const Account = new mongoose.Schema({
         type: String,
         required: true
     },
+    profilePassword: {
+        type: String,
+        required: true
+    },
     phone: {
         type: String,
         required: true
@@ -159,7 +163,11 @@ const AccountOpenRequests = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    profilePassword: {
+        type: String,
+        required: true,
+    },
 });
 
 const StaffLogins = new mongoose.Schema({
