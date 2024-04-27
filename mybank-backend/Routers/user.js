@@ -235,6 +235,23 @@ router.post("/changePassword", async function (req, res) {
     }
 });
 
+router.post("/changeProfilePassword", async function (req, res) {
+    try {
+        const userToken = req.body.userToken;
+        const oldPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
+        const accountNumber = await getAccountNumber(userToken);
+        let user = await accountCollection.findOne({
+            _id: accountNumber
+        });
+        if (oldPassword !== user.profilePassword) return res.send({message: "Old password is incorrect!"});
+        await accountCollection.updateOne({_id: accountNumber}, {profilePassword: newPassword});
+        res.send({message: "Profile Password updated successfully!"});
+    } catch (error) {
+        return res.send({message: "Error Occurred!"});
+    }
+});
+
 router.post("/transfer", async function (req, res) {
     try {
         const userToken = req.body.userToken;

@@ -7,7 +7,6 @@ function App() {
     const dispatch = useDispatch();
     const timeoutRef = useRef(null);
 
-
     useEffect(() => {
         const resetTimer = () => {
             if (timeoutRef.current) {
