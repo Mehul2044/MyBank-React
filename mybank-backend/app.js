@@ -28,7 +28,7 @@ if (!fs.existsSync(logDirectory)) {
 const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
 app.use(morgan("combined", {stream: accessLogStream}));
 
-app.use(cors({origin: ["http://localhost:3000", "https://my-bank-react.vercel.app"]}));
+app.use(cors({origin: ["http://localhost:3000", "https://my-bank-react.vercel.app", "https://my-bank-react-px47xh7wf-mehul2044s-projects.vercel.app"]}));
 app.use(express.json());
 
 app.get("/", function (req, res) {
