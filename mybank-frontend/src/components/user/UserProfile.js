@@ -154,18 +154,18 @@ function UserProfile() {
                     </div>
                     <div className={"modal-body"}>
                         <form onSubmit={profilePasswordChangeHandler}>
-                            <label htmlFor={"oldPassword"} className={"form-label"}>Old Password:</label>
-                            <input id={"oldPassword"} type={"password"} placeholder={"Old Password"} required={true}
+                            <label htmlFor={"oldProfilePassword"} className={"form-label"}>Old Password:</label>
+                            <input id={"oldProfilePassword"} type={"password"} placeholder={"Old Password"} required={true}
                                    value={oldPassword} onChange={event => setOldPassword(event.target.value)}
                                    className={"form-control"}/>
-                            <label htmlFor={"newPassword"} className={"form-label"}>New Password:</label>
-                            <input id={"newPassword"} type={"password"} placeholder={"New Password"} required={true}
+                            <label htmlFor={"newProfilePassword"} className={"form-label"}>New Password:</label>
+                            <input id={"newProfilePassword"} type={"password"} placeholder={"New Password"} required={true}
                                    value={newPassword} onChange={event => setNewPassword(event.target.value)}
                                    pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                                    title="Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character (@ $ ! % * ? &)"
                                    className={"form-control"}/>
-                            <label htmlFor={"confirmPassword"} className={"form-label"}>Confirm New Password:</label>
-                            <input id={"confirmPassword"} type={"password"} placeholder={"Confirm New Password"}
+                            <label htmlFor={"confirmProfilePassword"} className={"form-label"}>Confirm New Password:</label>
+                            <input id={"confirmProfilePassword"} type={"password"} placeholder={"Confirm New Password"}
                                    value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)}
                                    required={true} className={"form-control"}/>
                             <input type={"submit"} value={"Submit"} className={"btn btn-primary"}/>
