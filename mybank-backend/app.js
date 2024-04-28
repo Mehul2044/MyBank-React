@@ -2,6 +2,16 @@ require("dotenv").config()
 const path = require('path');
 const fs = require("fs");
 
+const redis = require("redis");
+let redisClient;
+(async () => {
+    redisClient = redis.createClient({url: process.env.REDIS_URL});
+    redisClient.on("error", (error) => console.error(`Error : ${error}`));
+    redisClient.on("connect", () => console.log("Redis connected"));
+    await redisClient.connect();
+})();
+module.exports = {redisClient};
+
 const relativePath = 'mybank-react-firebase-adminsdk-3ctvu-0629e6443c.json';
 const absolutePath = path.resolve(__dirname, relativePath);
 process.env.GOOGLE_APPLICATION_CREDENTIALS = absolutePath;

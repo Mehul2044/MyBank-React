@@ -1,4 +1,5 @@
 const {Router} = require("express");
+const {redisClient} = require("../app");
 const {
     accountCollection,
     accountOpenRequests,
@@ -47,14 +48,28 @@ router.get("/getName", async function (req, res) {
     try {
         const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
-        const user = await accountCollection.findOne({
-            _id: accountNumber
-        });
-        return res.send({name: user.firstName});
+        try {
+            const cacheData = await redisClient.get(`name:${accountNumber}`);
+            if (cacheData) {
+                return res.send({name: cacheData});
+            } else {
+                const user = await accountCollection.findOne({
+                    _id: accountNumber
+                });
+                await redisClient.set(accountNumber, user.firstName);
+                return res.send({name: user.firstName});
+            }
+        } catch (error) {
+            const user = await accountCollection.findOne({
+                _id: accountNumber
+            });
+            await redisClient.set(`name:${accountNumber}`, user.firstName.toString());
+            return res.send({name: user.firstName});
+        }
     } catch (error) {
+        console.log(error);
         return res.sendStatus(404);
     }
-
 });
 
 router.post("/login", async function (req, res) {
@@ -118,44 +133,51 @@ router.get("/accountInfo", async function (req, res) {
     try {
         const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
-        let user = await accountCollection.findOne({
-            _id: accountNumber
-        });
-        const balanceDoc = await balanceCollection.findOne({accountNumber: accountNumber});
-        const balance = balanceDoc.balance;
-        const transactions = await transactionCollection.find({
-            $or: [{sender_acc_no: accountNumber}, {recipient: accountNumber}],
-        });
-        let transactions_length = transactions.length;
-        let amount = [];
-        let to_from = [];
-        let date = [];
-        let time = [];
-        for (let i = 0; i < transactions_length; i++) {
-            if (accountNumber.toString() === transactions[i].sender_acc_no.toString() && accountNumber.toString() === transactions[i].recipient) {
-                amount.push("+" + transactions[i].amount.toString());
-                to_from.push("Self Credit");
-            } else if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
-                amount.push("-" + transactions[i].amount.toString());
-                to_from.push(transactions[i].recipient.toString());
-            } else if (accountNumber.toString() === transactions[i].recipient) {
-                amount.push("+" + transactions[i].amount.toString());
-                to_from.push(transactions[i].sender_acc_no.toString());
+        const cachedData = await redisClient.get(`user:${accountNumber}`);
+        if (cachedData) {
+            return res.send(JSON.parse(cachedData));
+        } else {
+            let user = await accountCollection.findOne({
+                _id: accountNumber
+            });
+            const balanceDoc = await balanceCollection.findOne({accountNumber: accountNumber});
+            const balance = balanceDoc.balance;
+            const transactions = await transactionCollection.find({
+                $or: [{sender_acc_no: accountNumber}, {recipient: accountNumber}],
+            });
+            let transactions_length = transactions.length;
+            let amount = [];
+            let to_from = [];
+            let date = [];
+            let time = [];
+            for (let i = 0; i < transactions_length; i++) {
+                if (accountNumber.toString() === transactions[i].sender_acc_no.toString() && accountNumber.toString() === transactions[i].recipient) {
+                    amount.push("+" + transactions[i].amount.toString());
+                    to_from.push("Self Credit");
+                } else if (accountNumber.toString() === transactions[i].sender_acc_no.toString()) {
+                    amount.push("-" + transactions[i].amount.toString());
+                    to_from.push(transactions[i].recipient.toString());
+                } else if (accountNumber.toString() === transactions[i].recipient) {
+                    amount.push("+" + transactions[i].amount.toString());
+                    to_from.push(transactions[i].sender_acc_no.toString());
+                }
+                date.push(transactions[i].date);
+                time.push(transactions[i].time);
             }
-            date.push(transactions[i].date);
-            time.push(transactions[i].time);
+            const data = {
+                accountNumber: accountNumber,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                balance: balance,
+                transactions_length: transactions_length,
+                amount: amount,
+                toFrom: to_from,
+                date: date,
+                time: time,
+            };
+            await redisClient.set(`user:${accountNumber}`, JSON.stringify(data));
+            return res.send(data);
         }
-        return res.send({
-            accountNumber: accountNumber,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            balance: balance,
-            transactions_length: transactions_length,
-            amount: amount,
-            toFrom: to_from,
-            date: date,
-            time: time,
-        });
     } catch (error) {
         console.log(error);
         return false;
@@ -209,11 +231,24 @@ router.get("/profileDetails", async function (req, res) {
     try {
         const userToken = req.header("userToken");
         const accountNumber = await getAccountNumber(userToken);
-        let user = await accountCollection.findOne({
-            _id: accountNumber
-        });
-        return res.send({firstName: user.firstName, lastName: user.lastName, email: user.eMail, phone: user.phone});
+        const cachedData = await redisClient.get(`profile:${accountNumber}`);
+        if (cachedData) {
+            return res.send(JSON.parse(cachedData));
+        } else {
+            let user = await accountCollection.findOne({
+                _id: accountNumber
+            });
+            const data = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.eMail,
+                phone: user.phone
+            };
+            await redisClient.set(`profile:${accountNumber}`, JSON.stringify(data));
+            return res.send(data);
+        }
     } catch (error) {
+        console.log(error);
         return false;
     }
 });
