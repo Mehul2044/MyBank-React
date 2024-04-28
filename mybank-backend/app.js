@@ -30,13 +30,14 @@ const mongooseModule = require("./config/mongodb");
 
 const PORT = process.env.PORT || 3001;
 
-const logDirectory = path.join(__dirname, "log");
-if (!fs.existsSync(logDirectory)) {
-    fs.mkdirSync(logDirectory);
+if (process.env.NODE_ENV === "development") {
+    const logDirectory = path.join(__dirname, "log");
+    if (!fs.existsSync(logDirectory)) {
+        fs.mkdirSync(logDirectory);
+    }
+    const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
+    app.use(morgan("combined", {stream: accessLogStream}));
 }
-
-const accessLogStream = fs.createWriteStream(path.join(logDirectory, "logfile.log"), {flags: "a"});
-app.use(morgan("combined", {stream: accessLogStream}));
 
 app.use(cors({origin: ["http://localhost:3000", "https://my-bank-react.vercel.app"]}));
 app.use(express.json());
