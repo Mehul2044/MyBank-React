@@ -2,14 +2,22 @@ import logo from "../../assets/logo.png"
 import styles from "./HeaderMain.module.css";
 import {Link, useNavigate} from "react-router-dom";
 import {authActions} from "../../store/authentication-slice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {backendUrl} from "../../config/constants";
 
 function HeaderMainAdmin() {
     const dispatch = useDispatch();
+    const token = useSelector(state => state.authentication.userToken);
     const navigator = useNavigate();
 
     const logoutHandler = () => {
         dispatch(authActions.logoutAdmin());
+        const options = {
+            method: "GET",
+            headers: {"Content-Type": "application/json", "user-token": token},
+        };
+        fetch(`${backendUrl}/logout`, options).then(() => {
+        });
         navigator("/admin", {replace: true});
     }
 

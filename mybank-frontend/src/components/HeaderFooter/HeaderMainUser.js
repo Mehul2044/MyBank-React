@@ -9,6 +9,7 @@ import {backendUrl} from "../../config/constants";
 function HeaderMainUser() {
     const dispatch = useDispatch();
     const navigator = useNavigate();
+    const token = useSelector(state => state.authentication.userToken);
 
     const userToken = useSelector(state => state.authentication.userToken);
 
@@ -28,6 +29,12 @@ function HeaderMainUser() {
 
     const logoutHandler = () => {
         dispatch(authActions.logoutUser());
+        const options = {
+            method: "GET",
+            headers: {"Content-Type": "application/json", "user-token": token},
+        };
+        fetch(`${backendUrl}/logout`, options).then(() => {
+        });
         navigator("/", {replace: true});
     }
 
@@ -51,7 +58,8 @@ function HeaderMainUser() {
                     <div className="offcanvas-header">
                         <h5 className={`offcanvas-title`} id="offcanvasNavbarLabel">
                             <div data-bs-dismiss={"offcanvas"}><Link className={styles.offTitle}
-                                     to="/main/user-profile">Welcome {name.toLocaleUpperCase()}!</Link></div>
+                                                                     to="/main/user-profile">Welcome {name.toLocaleUpperCase()}!</Link>
+                            </div>
                         </h5>
                         <button type="button" className="btn-close" data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>

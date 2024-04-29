@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const router = Router();
+const {redisClient} = require("../app");
 
 const {
     staffLoginCollection,
@@ -45,8 +46,14 @@ router.get("/getNumberQueries", async function (req, res) {
         return res.send(false);
     } else {
         try {
-            const count = await queriesCollection.countDocuments({status: "Pending"});
-            return res.send({count: count});
+            const count = await redisClient.get(`queriesCount:${name}`);
+            if (count) {
+                return res.send({count: count});
+            } else {
+                const count = await queriesCollection.countDocuments({status: "Pending"});
+                await redisClient.set(`queriesCount:${name}`, count.toString());
+                return res.send({count: count});
+            }
         } catch (error) {
             console.error('Error counting documents:', error);
             return res.status(500).send({error: 'Internal Server Error'});
@@ -87,8 +94,14 @@ router.get("/getForms", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        const users = await accountOpenRequests.find({status: "Pending"});
-        return res.send({body: users});
+        const users = await redisClient.get(`formList:${name}`);
+        if (users) {
+            return res.send({body: JSON.parse(users)});
+        } else {
+            const users = await accountOpenRequests.find({status: "Pending"});
+            await redisClient.set(`formList:${name}`, JSON.stringify(users));
+            return res.send({body: users});
+        }
     }
 });
 
@@ -136,8 +149,14 @@ router.get("/getQueries", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        const queries = await queriesCollection.find({status: "Pending"});
-        return res.send({body: queries});
+        const queries = await redisClient.get(`queries:${name}`);
+        if (queries) {
+            return res.send({body: JSON.parse(queries)});
+        } else {
+            const queries = await queriesCollection.find({status: "Pending"});
+            await redisClient.set(`queries:${name}`, JSON.stringify(queries));
+            return res.send({body: queries});
+        }
     }
 });
 

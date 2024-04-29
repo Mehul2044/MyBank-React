@@ -15,15 +15,21 @@ const {getAuth} = require("firebase-admin/auth");
 
 async function getAccountNumber(userToken) {
     try {
-        const auth = getAuth(admin);
-        const decodeToken = await auth.verifyIdToken(userToken);
-        const uid = decodeToken.uid;
-        const user = await auth.getUser(uid);
-        const phoneNumber = user.phoneNumber.slice(3);
-        const mainUser = await accountCollection.findOne({
-            phone: phoneNumber
-        });
-        return mainUser._id;
+        const accountNumber = await redisClient.get(userToken.toString());
+        if (accountNumber) {
+            return accountNumber;
+        } else {
+            const auth = getAuth(admin);
+            const decodeToken = await auth.verifyIdToken(userToken);
+            const uid = decodeToken.uid;
+            const user = await auth.getUser(uid);
+            const phoneNumber = user.phoneNumber.slice(3);
+            const mainUser = await accountCollection.findOne({
+                phone: phoneNumber
+            });
+            await redisClient.set(userToken.toString(), mainUser._id.toString());
+            return mainUser._id;
+        }
     } catch (error) {
         console.log(error);
         return false;

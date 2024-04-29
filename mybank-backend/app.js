@@ -46,6 +46,12 @@ app.get("/", function (req, res) {
     res.send({message: "Welcome to MyBank!"});
 });
 
+app.get("/logout", function (req, res) {
+    const token = req.header("user-token");
+    redisClient.del(token);
+    res.sendStatus(200);
+});
+
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/staff", staffRoutes);

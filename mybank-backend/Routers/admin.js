@@ -1,5 +1,6 @@
 const {getAuth} = require("firebase-admin/auth");
 const {admin} = require("../config/firebase-admin-config");
+const {redisClient} = require("../app");
 
 const {Router} = require("express");
 const router = Router();
@@ -14,9 +15,16 @@ const {
 
 async function verifyToken(req, res, next) {
     try {
-        const auth = getAuth(admin);
-        await auth.verifyIdToken(req.header("adminToken"));
-        next();
+        const userToken = req.header("adminToken");
+        const isVerified = redisClient.get(userToken.toString());
+        if (isVerified) {
+            return next();
+        } else {
+            const auth = getAuth(admin);
+            await auth.verifyIdToken(userToken);
+            await redisClient.set(userToken.toString(), "true");
+            next();
+        }
     } catch (error) {
         return res.status(401).json({message: "Unauthorized"});
     }

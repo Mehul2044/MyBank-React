@@ -67,3 +67,4 @@ The server should now be running on `http://localhost:3001` or the port specifie
     ```
 
 The application should now be running on `http://localhost:3000` or the port specified in your `.env` file.
+Alternatively, after installing the dependencies, you can run the `run.sh` script in the root directory of the project to start both the backend and frontend servers.
