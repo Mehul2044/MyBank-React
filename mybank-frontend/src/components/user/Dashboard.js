@@ -88,7 +88,7 @@ function Dashboard() {
              style={{opacity: animateInfo ? "1" : "0"}}>
             <img src={profileImage} width="160" height="200" alt={"profile"} className={styles.infoImage}/>
             <div className={styles.infoText}>
-                <pre>Acount Holder Name : {name}</pre>
+                <pre>Account Holder Name : {name}</pre>
                 <pre>Account Number     : {accountNumber}</pre>
                 <br/><br/>
                 <pre>Today's Date       : {getDate()}</pre>

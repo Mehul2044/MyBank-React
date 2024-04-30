@@ -73,7 +73,6 @@ router.get("/getName", async function (req, res) {
             return res.send({name: user.firstName});
         }
     } catch (error) {
-        console.log(error);
         return res.sendStatus(404);
     }
 });
