@@ -15,6 +15,50 @@ const getStaff = async (userId) => {
     return staff.name;
 }
 
+/**
+ * @swagger
+ * /staff/login:
+ *   post:
+ *     summary: Login for staff
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - password
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               password:
+ *                 type: string
+ *                 description: The staff's password
+ *     responses:
+ *       200:
+ *         description: Successfully logged in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 UID:
+ *                   type: string
+ *                   description: The staff's UID
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/login", async function (req, res) {
     const id = req.body.id;
     const password = req.body.password;
@@ -29,6 +73,41 @@ router.post("/login", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/getName:
+ *   get:
+ *     summary: Get the staff's name
+ *     tags: [Staff]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The staff's id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the staff's name
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The staff's name
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/getName", async function (req, res) {
     const staffId = req.header("id");
     const name = await getStaff(staffId);
@@ -39,6 +118,41 @@ router.get("/getName", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/getNumberQueries:
+ *   get:
+ *     summary: Get the number of queries
+ *     tags: [Staff]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The staff's id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the number of queries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: integer
+ *                   description: The number of queries
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/getNumberQueries", async function (req, res) {
     const staffId = req.header("id");
     const name = await getStaff(staffId);
@@ -61,6 +175,54 @@ router.get("/getNumberQueries", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/depositMoney:
+ *   post:
+ *     summary: Deposit money into an account
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - accountNumber
+ *               - amount
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               accountNumber:
+ *                 type: string
+ *                 description: The account number to deposit to
+ *               amount:
+ *                 type: number
+ *                 description: The amount to deposit
+ *     responses:
+ *       200:
+ *         description: Successfully deposited money
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The success message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/depositMoney", async function (req, res) {
     const staffId = req.body.id;
     const name = await getStaff(staffId);
@@ -88,6 +250,43 @@ router.post("/depositMoney", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/getForms:
+ *   get:
+ *     summary: Get the forms
+ *     tags: [Staff]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The staff's id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the forms
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 body:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                   description: The forms
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/getForms", async function (req, res) {
     const staffId = req.header("id");
     const name = await getStaff(staffId);
@@ -105,6 +304,50 @@ router.get("/getForms", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/formAccept:
+ *   post:
+ *     summary: Accept a form
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - formId
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               formId:
+ *                 type: string
+ *                 description: The form's id
+ *     responses:
+ *       200:
+ *         description: Successfully accepted the form
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: boolean
+ *                   description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/formAccept", async function (req, res) {
     const staffId = req.body.id;
     const name = await getStaff(staffId);
@@ -132,6 +375,47 @@ router.post("/formAccept", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/formReject:
+ *   post:
+ *     summary: Reject a form
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - formId
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               formId:
+ *                 type: string
+ *                 description: The form's id
+ *     responses:
+ *       200:
+ *         description: Successfully rejected the form
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: boolean
+ *               description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/formReject", async function (req, res) {
     const staffId = req.body.id;
     const name = await getStaff(staffId);
@@ -143,6 +427,43 @@ router.post("/formReject", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/getQueries:
+ *   get:
+ *     summary: Get the queries
+ *     tags: [Staff]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The staff's id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the queries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 body:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                   description: The queries
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/getQueries", async function (req, res) {
     const staffId = req.header("id");
     const name = await getStaff(staffId);
@@ -160,6 +481,54 @@ router.get("/getQueries", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/sendMessage:
+ *   post:
+ *     summary: Send a message in response to a query
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - queryId
+ *               - response
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               queryId:
+ *                 type: string
+ *                 description: The query's id
+ *               response:
+ *                 type: string
+ *                 description: The response message to the query
+ *     responses:
+ *       200:
+ *         description: Successfully sent the message
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: boolean
+ *                   description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/sendMessage", async function (req, res) {
     const staffId = req.body.id;
     const queryId = req.body.queryId;
@@ -173,6 +542,47 @@ router.post("/sendMessage", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/resolveQuery:
+ *   post:
+ *     summary: Resolve a query
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - queryId
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               queryId:
+ *                 type: string
+ *                 description: The query's id
+ *     responses:
+ *       200:
+ *         description: Successfully resolved the query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: boolean
+ *               description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/resolveQuery", async function (req, res) {
     const staffId = req.body.id;
     const queryId = req.body.queryId;
@@ -185,6 +595,43 @@ router.post("/resolveQuery", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/viewLoan:
+ *   get:
+ *     summary: View pending loan requests
+ *     tags: [Staff]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The staff's id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the loan requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 body:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                   description: The loan requests
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/viewLoan", async function (req, res) {
     const staffId = req.header("id");
     const name = await getStaff(staffId);
@@ -196,6 +643,47 @@ router.get("/viewLoan", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/acceptLoan:
+ *   post:
+ *     summary: Accept a loan request
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - loanId
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               loanId:
+ *                 type: string
+ *                 description: The loan request's id
+ *     responses:
+ *       200:
+ *         description: Successfully accepted the loan request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: boolean
+ *               description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/acceptLoan", async function (req, res) {
     const staffId = req.body.id;
     const name = await getStaff(staffId);
@@ -207,6 +695,47 @@ router.post("/acceptLoan", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /staff/rejectLoan:
+ *   post:
+ *     summary: Reject a loan request
+ *     tags: [Staff]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - loanId
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The staff's id
+ *               loanId:
+ *                 type: string
+ *                 description: The loan request's id
+ *     responses:
+ *       200:
+ *         description: Successfully rejected the loan request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: boolean
+ *               description: The success status
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/rejectLoan", async function (req, res) {
     const staffId = req.body.id;
     const name = await getStaff(staffId);

@@ -36,6 +36,46 @@ async function getAccountNumber(userToken) {
     }
 }
 
+/**
+ * @swagger
+ * /user/trackLogin:
+ *   post:
+ *     summary: Track the user's login
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - accountNumber
+ *             properties:
+ *               accountNumber:
+ *                 type: string
+ *                 description: The user's account number
+ *     responses:
+ *       200:
+ *         description: Login tracked successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: boolean
+ *                   description: The response message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/trackLogin", async function (req, res) {
     await activityTrackCollection.create({
         accountNumber: req.body.accountNumber,
@@ -50,6 +90,33 @@ router.post("/trackLogin", async function (req, res) {
     return res.send(true);
 });
 
+/**
+ * @swagger
+ * /user/getName:
+ *   get:
+ *     summary: Get the user's name
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: userToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's token
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user's name
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The user's name
+ *       404:
+ *         description: User not found
+ */
 router.get("/getName", async function (req, res) {
     try {
         const userToken = req.header("userToken");
@@ -93,6 +160,50 @@ router.post("/login", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Login the user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - accountNumber
+ *               - password
+ *             properties:
+ *               accountNumber:
+ *                 type: string
+ *                 description: The user's account number
+ *               password:
+ *                 type: string
+ *                 description: The user's password
+ *     responses:
+ *       200:
+ *         description: Successfully logged in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 phone:
+ *                   type: string
+ *                   description: The user's phone number
+ *       default:
+ *         description: Login failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/register", async function (req, res) {
     try {
         const firstName = req.body.firstName;
@@ -121,6 +232,46 @@ router.post("/register", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/trackRequest:
+ *   post:
+ *     summary: Track the status of a user's account request
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - trackingId
+ *             properties:
+ *               trackingId:
+ *                 type: string
+ *                 description: The tracking ID of the user's account request
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the status of the account request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   description: The status of the account request
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/trackRequest", async function (req, res) {
     try {
         const trackingId = req.body.trackingId;
@@ -134,6 +285,73 @@ router.post("/trackRequest", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/accountInfo:
+ *   get:
+ *     summary: Get the user's account information
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: userToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's token
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user's account information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accountNumber:
+ *                   type: string
+ *                   description: The user's account number
+ *                 firstName:
+ *                   type: string
+ *                   description: The user's first name
+ *                 lastName:
+ *                   type: string
+ *                   description: The user's last name
+ *                 balance:
+ *                   type: number
+ *                   description: The user's account balance
+ *                 transactions_length:
+ *                   type: number
+ *                   description: The number of transactions
+ *                 amount:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The amounts of the transactions
+ *                 toFrom:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The recipients or senders of the transactions
+ *                 date:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The dates of the transactions
+ *                 time:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The times of the transactions
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/accountInfo", async function (req, res) {
     try {
         const userToken = req.header("userToken");
@@ -189,6 +407,54 @@ router.get("/accountInfo", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/submitQuery:
+ *   post:
+ *     summary: Submit a user query
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - title
+ *               - message
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               title:
+ *                 type: string
+ *                 description: The title of the query
+ *               message:
+ *                 type: string
+ *                 description: The message of the query
+ *     responses:
+ *       200:
+ *         description: Successfully submitted the query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: The ID of the submitted query
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: boolean
+ *                   description: The error message
+ */
 router.post("/submitQuery", async function (req, res) {
     try {
         const userToken = req.body.userToken;
@@ -212,6 +478,50 @@ router.post("/submitQuery", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/getQueryStatus:
+ *   post:
+ *     summary: Get the status of a user's query
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - queryId
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               queryId:
+ *                 type: string
+ *                 description: The ID of the user's query
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the status of the user's query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 body:
+ *                   type: string
+ *                   description: The status of the user's query
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 body:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/getQueryStatus", async function (req, res) {
     try {
         const userToken = req.body.userToken;
@@ -232,6 +542,50 @@ router.post("/getQueryStatus", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/profileDetails:
+ *   get:
+ *     summary: Get the user's profile details
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: userToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's token
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user's profile details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 firstName:
+ *                   type: string
+ *                   description: The user's first name
+ *                 lastName:
+ *                   type: string
+ *                   description: The user's last name
+ *                 email:
+ *                   type: string
+ *                   description: The user's email
+ *                 phone:
+ *                   type: string
+ *                   description: The user's phone number
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/profileDetails", async function (req, res) {
     try {
         const userToken = req.header("userToken");
@@ -258,6 +612,54 @@ router.get("/profileDetails", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/changePassword:
+ *   post:
+ *     summary: Change the user's password
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - oldPassword
+ *               - newPassword
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               oldPassword:
+ *                 type: string
+ *                 description: The user's old password
+ *               newPassword:
+ *                 type: string
+ *                 description: The user's new password
+ *     responses:
+ *       200:
+ *         description: Successfully changed the password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The success message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/changePassword", async function (req, res) {
     try {
         const userToken = req.body.userToken;
@@ -275,6 +677,54 @@ router.post("/changePassword", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/changeProfilePassword:
+ *   post:
+ *     summary: Change the user's profile password
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - oldPassword
+ *               - newPassword
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               oldPassword:
+ *                 type: string
+ *                 description: The user's old profile password
+ *               newPassword:
+ *                 type: string
+ *                 description: The user's new profile password
+ *     responses:
+ *       200:
+ *         description: Successfully changed the profile password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The success message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/changeProfilePassword", async function (req, res) {
     try {
         const userToken = req.body.userToken;
@@ -292,6 +742,58 @@ router.post("/changeProfilePassword", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/transfer:
+ *   post:
+ *     summary: Transfer amount from the user's account to another account
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - accountNumber
+ *               - password
+ *               - amount
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               accountNumber:
+ *                 type: string
+ *                 description: The recipient's account number
+ *               password:
+ *                 type: string
+ *                 description: The user's profile password
+ *               amount:
+ *                 type: number
+ *                 description: The amount to be transferred
+ *     responses:
+ *       200:
+ *         description: Successfully transferred the amount
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The success message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/transfer", async function (req, res) {
     try {
         const userToken = req.body.userToken;
@@ -331,6 +833,53 @@ router.post("/transfer", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/getLoanDetails:
+ *   get:
+ *     summary: Get the user's loan details
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: userToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's token
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user's loan details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 loanType:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The types of the user's loans
+ *                 amount:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The amounts of the user's loans
+ *                 loanStatus:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: The statuses of the user's loans
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.get("/getLoanDetails", async function (req, res) {
     try {
         const userToken = req.header("userToken");
@@ -353,6 +902,58 @@ router.get("/getLoanDetails", async function (req, res) {
     }
 });
 
+/**
+ * @swagger
+ * /user/applyLoan:
+ *   post:
+ *     summary: Apply for a loan
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userToken
+ *               - loanAmount
+ *               - loanType
+ *               - reason
+ *             properties:
+ *               userToken:
+ *                 type: string
+ *                 description: The user's token
+ *               loanAmount:
+ *                 type: number
+ *                 description: The amount of the loan
+ *               loanType:
+ *                 type: string
+ *                 description: The type of the loan
+ *               reason:
+ *                 type: string
+ *                 description: The reason for the loan
+ *     responses:
+ *       200:
+ *         description: Successfully applied for the loan
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The success message
+ *       default:
+ *         description: Error Occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ */
 router.post("/applyLoan", async function (req, res) {
     try {
         let userToken = req.body.userToken;
