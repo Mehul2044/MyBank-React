@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Navigate to the backend directory and start it in a new tab
-gnome-terminal --tab -- bash -c "cd mybank-backend && npm start"
+cd mybank-frontend || return
+echo "Starting frontend"
 
-# Navigate to the frontend directory and start it in a new tab
-gnome-terminal --tab -- bash -c "cd mybank-frontend && npm start"
+npm start &
+
+cd ../mybank-backend || return
+echo "Starting backend"
+npm start
