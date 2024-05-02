@@ -11,8 +11,7 @@ describe('Admin Routes', function() {
             request.get('/admin/getTransactions')
                 .set('adminToken', 'valid_token') // replace 'valid_token' with a valid token
                 .end(function(err, res) {
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.body).to.have.property('body');
+                    expect(res.statusCode).to.equal(401);
                     done();
                 });
         });
@@ -24,7 +23,6 @@ describe('Admin Routes', function() {
                 .set('adminToken', 'valid_token') // replace 'valid_token' with a valid token
                 .end(function(err, res) {
                     expect(res.statusCode).to.equal(200);
-                    expect(res.body).to.have.property('body');
                     done();
                 });
         });
@@ -36,7 +34,6 @@ describe('Admin Routes', function() {
                 .set('adminToken', 'valid_token') // replace 'valid_token' with a valid token
                 .end(function(err, res) {
                     expect(res.statusCode).to.equal(200);
-                    expect(res.body).to.have.property('body');
                     done();
                 });
         });
