@@ -226,6 +226,7 @@ router.post("/register", async function (req, res) {
             profilePassword: "ProfilePassword@123"
         });
         const savedRequest = await newRequest.save();
+        redisClient.del(`formList`);
         res.send(savedRequest._id);
     } catch (error) {
         res.send(false);
@@ -471,6 +472,8 @@ router.post("/submitQuery", async function (req, res) {
             status: "Pending",
             response: "Pending"
         });
+        redisClient.del(`queriesCount`);
+        redisClient.del(`queries`);
         return res.send(response._id);
     } catch (error) {
         console.log(error);
@@ -814,7 +817,7 @@ router.post("/transfer", async function (req, res) {
         } else {
             await balanceCollection.updateOne({accountNumber: accountNumber}, {$inc: {balance: amount}});
             await balanceCollection.updateOne({accountNumber: user._id}, {$inc: {balance: -amount}});
-            await transactionCollection.create({
+            const object = await transactionCollection.create({
                 sender_acc_no: user._id,
                 amount: amount,
                 recipient: accountNumber,
@@ -826,9 +829,12 @@ router.post("/transfer", async function (req, res) {
                     hour12: true
                 }),
             });
+            redisClient.del(`user:${user._id}`);
+            redisClient.del(`user:${accountNumber}`);
         }
         return res.send({message: "Transaction Complete"});
     } catch (error) {
+        console.log(error);
         return res.send({message: "Error Occurred!"});
     }
 });

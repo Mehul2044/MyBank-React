@@ -160,12 +160,12 @@ router.get("/getNumberQueries", async function (req, res) {
         return res.send(false);
     } else {
         try {
-            const count = await redisClient.get(`queriesCount:${name}`);
+            const count = await redisClient.get(`queriesCount`);
             if (count) {
                 return res.send({count: count});
             } else {
                 const count = await queriesCollection.countDocuments({status: "Pending"});
-                await redisClient.set(`queriesCount:${name}`, count.toString());
+                await redisClient.set(`queriesCount`, count.toString());
                 return res.send({count: count});
             }
         } catch (error) {
@@ -231,8 +231,6 @@ router.post("/depositMoney", async function (req, res) {
     } else {
         const accountNumber = req.body.accountNumber;
         const amount = req.body.amount;
-        // const method = req.body.method;
-        // const comment = req.body.comment;
         await balanceCollection.updateOne({accountNumber: accountNumber}, {$inc: {balance: amount}});
         await transactionCollection.create({
             sender_acc_no: accountNumber,
@@ -246,6 +244,7 @@ router.post("/depositMoney", async function (req, res) {
                 hour12: true
             }),
         });
+        redisClient.del(`user:${accountNumber}`);
         return res.send({message: "Transaction Complete"});
     }
 });
@@ -293,12 +292,12 @@ router.get("/getForms", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        const users = await redisClient.get(`formList:${name}`);
+        const users = await redisClient.get(`formList`);
         if (users) {
             return res.send({body: JSON.parse(users)});
         } else {
             const users = await accountOpenRequests.find({status: "Pending"});
-            await redisClient.set(`formList:${name}`, JSON.stringify(users));
+            await redisClient.set(`formList`, JSON.stringify(users));
             return res.send({body: users});
         }
     }
@@ -470,12 +469,12 @@ router.get("/getQueries", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
-        const queries = await redisClient.get(`queries:${name}`);
+        const queries = await redisClient.get(`queries`);
         if (queries) {
             return res.send({body: JSON.parse(queries)});
         } else {
             const queries = await queriesCollection.find({status: "Pending"});
-            await redisClient.set(`queries:${name}`, JSON.stringify(queries));
+            await redisClient.set(`queries`, JSON.stringify(queries));
             return res.send({body: queries});
         }
     }
@@ -590,6 +589,8 @@ router.post("/resolveQuery", async function (req, res) {
     if (!name) {
         return res.send(false);
     } else {
+        redisClient.del(`queriesCount`);
+        redisClient.del(`queries`);
         await queriesCollection.updateOne({_id: queryId}, {$set: {status: "Resolved"}});
         return res.send(true);
     }

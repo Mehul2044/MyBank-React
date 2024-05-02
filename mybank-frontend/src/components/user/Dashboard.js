@@ -59,6 +59,7 @@ function Dashboard() {
             setToFrom(response.toFrom);
             setDate(response.date);
             setTime(response.time);
+            setBalance(response.balance);
         }
         fetchData().then(() => setTransactionLoading(false));
     }

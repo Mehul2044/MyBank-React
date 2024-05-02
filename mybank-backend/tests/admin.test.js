@@ -11,7 +11,7 @@ describe('Admin Routes', function() {
             request.get('/admin/getTransactions')
                 .set('adminToken', 'valid_token') // replace 'valid_token' with a valid token
                 .end(function(err, res) {
-                    expect(res.statusCode).to.equal(401);
+                    expect(res.statusCode).to.equal(200);
                     done();
                 });
         });

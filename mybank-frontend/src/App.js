@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import Router from "./config/Router";
 import {useDispatch} from 'react-redux';
 import {authActions} from './store/authentication-slice';
+import {backendUrl} from "./config/constants";
 
 function App() {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function App() {
                 clearTimeout(timeoutRef.current);
             }
             timeoutRef.current = setTimeout(() => {
+                fetch(`${backendUrl}/logout`).then(() => {});
                 dispatch(authActions.logoutUser());
                 dispatch(authActions.logoutAdmin());
                 dispatch(authActions.logoutStaff());
