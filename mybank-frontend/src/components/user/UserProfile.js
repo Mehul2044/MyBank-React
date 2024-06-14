@@ -110,8 +110,7 @@ function UserProfile() {
                             </div>
                             <div className="col-md-12">
                                 <div className="col-md-12" style={{margin: "1rem"}}>
-                                    <span style={{fontWeight: "bold"}}>Address</span>: Lorem ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Ad iure neque soluta velit!
+                                    <span style={{fontWeight: "bold"}}>Address</span>: SriCity, Andhra Pradesh
                                 </div>
                             </div>
                             <div className="col-md-12">

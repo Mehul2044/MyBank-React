@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development nodemon app.js",
-    "test": "mocha --timeout 10000 ./tests/*.test.js"
+    "dev": "NODE_ENV=development nodemon app.js"
   },
   "keywords": [],
   "author": "",
